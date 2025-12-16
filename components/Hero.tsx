@@ -24,7 +24,7 @@ export default function Hero() {
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="https://github.com"
+            href="https://github.com/vsriharsha814"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 bg-gray-900 dark:bg-gray-800 hover:bg-gray-800 dark:hover:bg-gray-700 text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2"
@@ -35,7 +35,7 @@ export default function Hero() {
             GitHub
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/vallabhanenisriharsha/"
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-900 dark:text-white rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-700"
