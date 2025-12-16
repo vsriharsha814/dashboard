@@ -1,16 +1,51 @@
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-          Sri Harsha Vallabhaneni
-        </h1>
-        <p className="text-2xl md:text-3xl text-gray-700 dark:text-gray-300 mb-6 font-medium">
-          Backend & GenAI Engineer
-        </p>
-        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
-          Building production-grade AI systems
-        </p>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
+            Sri Harsha Vallabhaneni
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mb-3 font-medium">
+            Backend & GenAI Engineer
+          </p>
+          <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 mb-6">
+            MS Computer Science, University of Colorado Boulder • GPA: 4.0
+          </p>
+        </div>
+
+        <div className="max-w-3xl mx-auto mb-10">
+          <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-center">
+            Software Engineer building production-grade AI systems with experience at{" "}
+            <span className="font-semibold">Cisco</span>,{" "}
+            <span className="font-semibold">Empowered Margins</span>, and{" "}
+            <span className="font-semibold">Darwinbox</span>. Specialized in backend systems,
+            LLM-powered applications, and RAG pipelines that deliver measurable impact in
+            production environments.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-10">
+          <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">95%</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Accuracy achieved in production RAG chatbots
+            </div>
+          </div>
+          <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">85%</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Reduction in manual processing time through automation
+            </div>
+          </div>
+          <div className="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+            <div className="text-3xl font-bold text-gray-900 dark:text-white mb-2">3+</div>
+            <div className="text-sm text-gray-600 dark:text-gray-400">
+              Years building production systems at scale
+            </div>
+          </div>
+        </div>
+
         <div className="flex flex-wrap justify-center gap-4 mb-8 text-sm md:text-base">
           <span className="px-4 py-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg">
             Backend & Distributed Systems
@@ -22,6 +57,7 @@ export default function Hero() {
             ML Pipelines & Observability
           </span>
         </div>
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a
             href="https://github.com/vsriharsha814"
