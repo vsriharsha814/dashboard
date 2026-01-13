@@ -32,11 +32,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <main className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <Link
           href="/"
-          className="inline-flex items-center text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white mb-8 transition-colors"
+          className="inline-flex items-center text-gray-700 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 mb-8 transition-colors font-medium"
         >
           <svg
             className="w-5 h-5 mr-2"
@@ -52,7 +52,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           Back to Projects
         </Link>
 
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-gray-200 dark:border-slate-700 overflow-hidden">
           <div className="relative h-96 w-full">
             <Image
               src={project.image}
@@ -64,17 +64,17 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           <div className="p-8 md:p-12">
             <div className="flex flex-wrap items-center gap-4 mb-6">
-              <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-sm font-medium">
+              <span className="px-3 py-1 bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 rounded-md text-sm font-medium border border-blue-200 dark:border-slate-600">
                 {project.category}
               </span>
-              <span className="text-gray-500 dark:text-gray-400 text-sm">{project.year}</span>
+              <span className="text-gray-500 dark:text-slate-400 text-sm">{project.year}</span>
             </div>
 
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
               {project.title}
             </h1>
 
-            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
+            <p className="text-xl text-gray-600 dark:text-slate-300 mb-8">
               {project.description}
             </p>
 
@@ -82,7 +82,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
                 About This Project
               </h2>
-              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              <p className="text-gray-600 dark:text-slate-300 leading-relaxed">
                 {project.longDescription}
               </p>
             </div>
@@ -95,7 +95,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 {project.technologies.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-md text-sm"
+                    className="px-3 py-1 bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 rounded-md text-sm border border-blue-200 dark:border-slate-600"
                   >
                     {tech}
                   </span>
@@ -109,7 +109,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center px-6 py-3 bg-gray-900 dark:bg-gray-700 hover:bg-gray-800 dark:hover:bg-gray-600 text-white rounded-lg font-semibold transition-colors duration-200"
+                  className="flex items-center justify-center px-6 py-3 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white rounded-lg font-semibold transition-all duration-200 shadow-md hover:shadow-lg"
                 >
                   <svg
                     className="w-5 h-5 mr-2"
@@ -130,7 +130,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center px-6 py-3 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-900 dark:text-white rounded-lg font-medium transition-colors duration-200 border border-gray-300 dark:border-gray-600"
+                  className="flex items-center justify-center px-6 py-3 bg-white dark:bg-slate-700 hover:bg-gray-50 dark:hover:bg-slate-600 text-gray-900 dark:text-white rounded-lg font-medium transition-all duration-200 border border-gray-300 dark:border-slate-600 shadow-md hover:shadow-lg"
                 >
                   <svg
                     className="w-5 h-5 mr-2"
