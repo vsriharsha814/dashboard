@@ -18,14 +18,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Sri Harsha Vallabhaneni - Backend & GenAI Engineer",
   description: "Software Engineer and MSCS student at CU Boulder. Building production-grade AI systems with experience at Cisco, Empowered Margins, and Darwinbox.",
-  icons: {
-    icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
-      { url: '/favicon.ico', sizes: 'any' },
-    ],
-    apple: '/apple-icon.png',
-  },
-  metadataBase: new URL('https://sriharshavallabhaneni.com'),
   openGraph: {
     title: "Sri Harsha Vallabhaneni - Backend & GenAI Engineer",
     description: "Building production-grade AI systems with experience at Cisco, Empowered Margins, and Darwinbox.",
