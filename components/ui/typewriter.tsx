@@ -26,7 +26,9 @@ export function Typewriter({
       const t = setTimeout(() => setStarted(true), delay);
       return () => clearTimeout(t);
     }
-    if (!started && delay === 0) setStarted(true);
+    if (!started && delay === 0) {
+      queueMicrotask(() => setStarted(true));
+    }
   }, [delay, started]);
 
   useEffect(() => {

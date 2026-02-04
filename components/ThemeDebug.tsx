@@ -8,7 +8,8 @@ export default function ThemeDebug() {
   const [hasDarkClass, setHasDarkClass] = useState(false);
 
   useEffect(() => {
-    setHasDarkClass(document.documentElement.classList.contains('dark'));
+    const isDark = document.documentElement.classList.contains('dark');
+    queueMicrotask(() => setHasDarkClass(isDark));
   }, [theme]);
 
   if (!mounted) return null;

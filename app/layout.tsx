@@ -17,19 +17,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sri Harsha Vallabhaneni - AI Engineer Portfolio | RAG Expert",
-  description: "AI and Systems Engineer. MS CS @ CU Boulder (4.0). RAG, GenAI, FastAPI. Experience at Cisco, Darwinbox, Empowered Margins.",
-  keywords: ["AI Engineer Portfolio", "RAG Expert", "Sri Harsha Vallabhaneni", "GenAI", "FastAPI", "CU Boulder"],
+  title: "Sri Harsha Vallabhaneni - AI Engineer Portfolio | RAG Expert | CU Boulder",
+  description: "AI and Systems Engineer. MS CS @ CU Boulder (4.0 GPA). Building production-grade RAG systems, LLM pipelines, and distributed systems. Experience at Cisco, Darwinbox, Empowered Margins.",
+  keywords: [
+    "AI Engineer Portfolio",
+    "RAG Expert",
+    "Sri Harsha Vallabhaneni",
+    "GenAI",
+    "FastAPI",
+    "CU Boulder",
+    "Machine Learning Engineer",
+    "LLM Systems",
+    "Distributed Systems",
+    "BITS Pilani",
+  ],
+  authors: [{ name: "Sri Harsha Vallabhaneni" }],
+  creator: "Sri Harsha Vallabhaneni",
   openGraph: {
     title: "Sri Harsha Vallabhaneni - AI Engineer Portfolio",
-    description: "Building Intelligent Systems & Agentic AI. RAG, GenAI, Systems Engineering.",
+    description: "Building Intelligent Systems & Agentic AI. MS CS @ CU Boulder (4.0). RAG, GenAI, Systems Engineering. 95% hallucination reduction in production RAG systems.",
     type: "website",
     locale: "en_US",
+    siteName: "Sri Harsha Vallabhaneni Portfolio",
+    url: "https://vsriharsha814.vercel.app",
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "Sri Harsha Vallabhaneni - AI Engineer Portfolio",
-    description: "RAG Expert · GenAI · Systems Engineering",
+    description: "RAG Expert · GenAI · Systems Engineering · CU Boulder",
+    creator: "@vsriharsha814",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -46,31 +66,14 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  // Clear any previously stored theme for testing
-                  // localStorage.removeItem('theme'); // Uncomment to reset
-                  
-                  function getTheme() {
-                    const saved = localStorage.getItem('theme');
-                    console.log('Saved theme:', saved);
-                    if (saved === 'light' || saved === 'dark') {
-                      return saved;
-                    }
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    console.log('Browser prefers dark:', prefersDark);
-                    return prefersDark ? 'dark' : 'dark';
-                  }
-                  
-                  const theme = getTheme();
-                  console.log('Applying theme:', theme);
-                  
+                  var saved = localStorage.getItem('theme');
+                  var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
                   if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
                   } else {
                     document.documentElement.classList.remove('dark');
                   }
-                } catch (e) {
-                  console.error('Theme script error:', e);
-                }
+                } catch (e) {}
               })();
             `,
           }}

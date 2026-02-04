@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
 import { AnimatedGridPattern } from "@/components/ui/animated-grid-pattern";
 import { Typewriter } from "@/components/ui/typewriter";

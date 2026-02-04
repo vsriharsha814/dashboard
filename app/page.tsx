@@ -2,6 +2,7 @@ import Hero from "@/components/Hero";
 import BentoGrid from "@/components/BentoGrid";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
+import EducationSection from "@/components/EducationSection";
 import BentoProjectGrid from "@/components/BentoProjectGrid";
 import { experiences } from "@/lib/data";
 import { projects as legacyProjects } from "@/data/projects";
@@ -27,6 +28,7 @@ export default function Home() {
       <section id="skills" className="py-20 bg-background">
         <SkillsSection />
       </section>
+      <EducationSection />
       <section id="projects-all" className="py-20 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -57,29 +59,6 @@ export default function Home() {
               I focus on systems that reduce ambiguity and deliver measurable impact:
               observability, scale, and exactly-once semantics.
             </p>
-            <div className="mt-8 p-6 bg-card rounded-lg border border-border">
-              <h3 className="text-xl font-semibold text-foreground mb-4">
-                Education
-              </h3>
-              <div className="space-y-3">
-                <div>
-                  <p className="font-medium text-foreground">
-                    MS Computer Science, University of Colorado Boulder
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    GPA: 4.0 · Aug 2024 – May 2026
-                  </p>
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">
-                    BE, BITS Pilani
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Aug 2018 – May 2022
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

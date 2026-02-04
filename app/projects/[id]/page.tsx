@@ -3,8 +3,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { getProjectBySlug } from "@/lib/data";
 import { getProjectById } from "@/data/projects";
-import { ChevronLeft } from "lucide-react";
+import { getProjectScreenshots } from "@/lib/screenshots";
+import { ChevronLeft, ExternalLink, Github } from "lucide-react";
 import MermaidDiagram from "@/components/MermaidDiagram";
+import ProjectGallery from "@/components/ProjectGallery";
 
 /** Resolve project from either lib/data (Bento slugs) or data/projects (All Projects grid ids). */
 function getProject(id: string) {
@@ -48,6 +50,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   if (!project) {
     notFound();
   }
+
+  const screenshots = await getProjectScreenshots(project.slug);
+  const hasDemoUrl = project.demoUrl || project.liveUrl;
+  const hasRepoUrl = project.repoUrl || project.githubUrl;
 
   return (
     <main className="min-h-screen bg-background">
@@ -118,35 +124,108 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
             </div>
 
+            {screenshots.length > 0 && (
+              <ProjectGallery images={screenshots} projectTitle={project.title} />
+            )}
+
             {(project.slug === "exactly-once" || project.id === "exactly-once") && (
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-foreground mb-4">
-                  Idempotency Key Flow
+                  Architecture: Idempotency Key Flow
                 </h2>
                 <MermaidDiagram />
               </div>
             )}
 
-            {(project.githubUrl || project.liveUrl) && (
+            {project.slug === "cisco" && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
+                  Technical Deep-Dive: Anomaly Detection Pipeline
+                </h2>
+                <div className="bg-muted/50 rounded-lg border border-border p-6">
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    The system uses a multi-stage anomaly detection pipeline:
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li>Real-time log ingestion via FastAPI endpoints</li>
+                    <li>LLM-powered semantic analysis for pattern recognition</li>
+                    <li>Historical context retrieval from MongoDB for similar incidents</li>
+                    <li>Automated triage scoring to prioritize critical alerts</li>
+                  </ul>
+                  <p className="text-muted-foreground leading-relaxed mt-4">
+                    This architecture reduced triage latency by enabling faster root cause identification through semantic search over past outages.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {project.slug === "darwinbox" && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
+                  Technical Deep-Dive: RAG Pipeline & Hallucination Reduction
+                </h2>
+                <div className="bg-muted/50 rounded-lg border border-border p-6">
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    Achieved 95% hallucination reduction through:
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li>Semantic chunking with overlap to preserve context boundaries</li>
+                    <li>Hybrid retrieval combining dense vectors (embeddings) and sparse (BM25) for better recall</li>
+                    <li>Re-ranking pipeline to prioritize most relevant chunks</li>
+                    <li>Strict prompt engineering with context window management</li>
+                    <li>Post-generation validation against source documents</li>
+                  </ul>
+                  <p className="text-muted-foreground leading-relaxed mt-4">
+                    The system integrates with enterprise knowledge bases and provides real-time observability through custom dashboards.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {project.slug === "empowered-margins" && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
+                  Technical Deep-Dive: Multi-Agent Workflows
+                </h2>
+                <div className="bg-muted/50 rounded-lg border border-border p-6">
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    Built agentic AI pipelines that reduced manual processing by 85%:
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li>Header detection agent: Identifies column headers using semantic similarity</li>
+                    <li>Data extraction agent: Extracts structured data from Excel cells</li>
+                    <li>Normalization agent: Standardizes formats and validates data integrity</li>
+                    <li>Orchestration layer: Coordinates agents with error handling and retries</li>
+                  </ul>
+                  <p className="text-muted-foreground leading-relaxed mt-4">
+                    The multi-agent approach outperformed rule-based systems by 40% in accuracy while handling diverse document formats.
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {(hasRepoUrl || hasDemoUrl) && (
               <div className="flex flex-col sm:flex-row gap-4">
-                {project.githubUrl && (
+                {hasRepoUrl && (
                   <a
-                    href={project.githubUrl}
+                    href={project.repoUrl || project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-semibold hover:opacity-90 transition-opacity"
                   >
-                    View on GitHub
+                    <Github className="h-5 w-5" />
+                    View Repository
                   </a>
                 )}
-                {project.liveUrl && (
+                {hasDemoUrl && (
                   <a
-                    href={project.liveUrl}
+                    href={project.demoUrl || project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center px-6 py-3 border border-border rounded-lg font-medium hover:bg-secondary transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 border border-border rounded-lg font-medium hover:bg-secondary transition-colors"
                   >
-                    View Live Demo
+                    <ExternalLink className="h-5 w-5" />
+                    Live Demo
                   </a>
                 )}
               </div>

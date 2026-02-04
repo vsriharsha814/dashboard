@@ -17,18 +17,25 @@ export default function Navbar() {
             Sri Harsha Vallabhaneni
           </Link>
           <div className="flex items-center gap-8">
-            <div className="hidden md:flex space-x-8">
-              <a href="/#projects" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
-                Projects
-              </a>
-              <a href="/#experience" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
+            <div className="hidden md:flex items-center space-x-8">
+              <Link href="/#experience" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
                 Experience
-              </a>
-              <a href="/#skills" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
+              </Link>
+              <Link href="/#projects" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
+                Projects
+              </Link>
+              <Link href="/#skills" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
                 Skills
-              </a>
-              <a href="/#about" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
-                About
+              </Link>
+              <Link href="/#education" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
+                Education
+              </Link>
+              <a
+                href="/resume.pdf"
+                download
+                className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
+              >
+                Download Resume
               </a>
             </div>
             {mounted && (

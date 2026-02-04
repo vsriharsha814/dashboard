@@ -52,6 +52,8 @@ export interface ProjectItem {
   image?: string;
   githubUrl?: string;
   liveUrl?: string;
+  demoUrl?: string;
+  repoUrl?: string;
   featured: boolean;
   metric?: string; // e.g. "95% Hallucination Reduction"
 }

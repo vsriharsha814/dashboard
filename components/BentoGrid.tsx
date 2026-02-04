@@ -4,8 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { getBentoProjects, type ProjectItem } from "@/lib/data";
-import { Terminal, Brain, FileSpreadsheet } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Brain, FileSpreadsheet } from "lucide-react";
 
 const FAKE_LOG_LINES = [
   "[INFO] router-01 BGP session established",

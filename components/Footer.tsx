@@ -1,4 +1,3 @@
-import Link from "next/link";
 import GitHubCalendar from "@/components/GitHubCalendar";
 
 export default function Footer() {

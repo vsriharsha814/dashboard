@@ -11,20 +11,23 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType>({
-  theme: 'light',
+  theme: 'dark',
   toggleTheme: () => {},
   mounted: false,
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light');
+  const [theme, setTheme] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    // Get the initial theme from the document (set by script in layout)
+    // Sync with document (set by script in layout). Defer setState to avoid cascading renders.
     const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-    setMounted(true);
+    const nextTheme = isDark ? 'dark' : 'light';
+    queueMicrotask(() => {
+      setTheme(nextTheme);
+      setMounted(true);
+    });
   }, []);
 
   const toggleTheme = () => {
