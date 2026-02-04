@@ -2,9 +2,9 @@ import Hero from "@/components/Hero";
 import BentoGrid from "@/components/BentoGrid";
 import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
+import BentoProjectGrid from "@/components/BentoProjectGrid";
 import { experiences } from "@/lib/data";
 import { projects as legacyProjects } from "@/data/projects";
-import ProjectGrid from "@/components/ProjectGrid";
 
 export default function Home() {
   return (
@@ -37,7 +37,7 @@ export default function Home() {
               Systems, GenAI, and full-stack work
             </p>
           </div>
-          <ProjectGrid projects={legacyProjects} />
+          <BentoProjectGrid projects={legacyProjects} />
         </div>
       </section>
       <section id="about" className="py-20 bg-background">
