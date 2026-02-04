@@ -15,18 +15,18 @@ export default function Navbar() {
           </Link>
           <div className="flex items-center gap-8">
             <div className="hidden md:flex space-x-8">
-              <Link href="/#projects" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm font-medium">
+              <a href="/#projects" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
                 Projects
-              </Link>
-              <Link href="/#experience" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm font-medium">
+              </a>
+              <a href="/#experience" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
                 Experience
-              </Link>
-              <Link href="/#skills" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm font-medium">
+              </a>
+              <a href="/#skills" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
                 Skills
-              </Link>
-              <Link href="/#about" className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors text-sm font-medium">
+              </a>
+              <a href="/#about" className="text-muted-foreground hover:text-primary transition-colors text-sm font-medium">
                 About
-              </Link>
+              </a>
             </div>
             {mounted && (
               <button

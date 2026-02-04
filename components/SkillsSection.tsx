@@ -35,32 +35,38 @@ export default function SkillsSection() {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-gray-50 dark:bg-slate-900">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-12 text-center">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-12">
+        <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
           Skills
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {skillGroups.map((group) => (
-            <div key={group.title} className="bg-white dark:bg-slate-800 p-6 rounded-lg border border-gray-200 dark:border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-300">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                {group.title}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {group.skills.map((skill) => (
-                  <span
-                    key={skill}
-                    className="px-3 py-1 bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 rounded-md text-sm border border-blue-200 dark:border-slate-600 hover:bg-blue-100 dark:hover:bg-slate-600 transition-colors"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Tech stack and tools
+        </p>
       </div>
-    </section>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {skillGroups.map((group) => (
+          <div
+            key={group.title}
+            className="bg-card p-6 rounded-lg border border-border hover:border-primary/50 transition-colors"
+          >
+            <h3 className="text-xl font-semibold text-foreground mb-4">
+              {group.title}
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {group.skills.map((skill) => (
+                <span
+                  key={skill}
+                  className="px-3 py-1 bg-primary/10 text-primary rounded-md text-sm border border-primary/20 hover:bg-primary/20 transition-colors"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import ChatWidget from "@/components/ChatWidget";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,18 +17,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sri Harsha Vallabhaneni - Backend & GenAI Engineer",
-  description: "Software Engineer and MSCS student at CU Boulder. Building production-grade AI systems with experience at Cisco, Empowered Margins, and Darwinbox.",
+  title: "Sri Harsha Vallabhaneni - AI Engineer Portfolio | RAG Expert",
+  description: "AI and Systems Engineer. MS CS @ CU Boulder (4.0). RAG, GenAI, FastAPI. Experience at Cisco, Darwinbox, Empowered Margins.",
+  keywords: ["AI Engineer Portfolio", "RAG Expert", "Sri Harsha Vallabhaneni", "GenAI", "FastAPI", "CU Boulder"],
   openGraph: {
-    title: "Sri Harsha Vallabhaneni - Backend & GenAI Engineer",
-    description: "Building production-grade AI systems with experience at Cisco, Empowered Margins, and Darwinbox.",
-    type: 'website',
-    locale: 'en_US',
+    title: "Sri Harsha Vallabhaneni - AI Engineer Portfolio",
+    description: "Building Intelligent Systems & Agentic AI. RAG, GenAI, Systems Engineering.",
+    type: "website",
+    locale: "en_US",
   },
   twitter: {
-    card: 'summary',
-    title: "Sri Harsha Vallabhaneni - Backend & GenAI Engineer",
-    description: "Building production-grade AI systems",
+    card: "summary",
+    title: "Sri Harsha Vallabhaneni - AI Engineer Portfolio",
+    description: "RAG Expert · GenAI · Systems Engineering",
   },
 };
 
@@ -55,7 +57,7 @@ export default function RootLayout({
                     }
                     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                     console.log('Browser prefers dark:', prefersDark);
-                    return prefersDark ? 'dark' : 'light';
+                    return prefersDark ? 'dark' : 'dark';
                   }
                   
                   const theme = getTheme();
@@ -81,6 +83,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Footer />
+          <ChatWidget />
         </ThemeProvider>
       </body>
     </html>

@@ -1,0 +1,206 @@
+/**
+ * Central resume & portfolio data for Sri Harsha Vallabhaneni.
+ * Used by pages, Bento Grid, and AI chat system prompt.
+ */
+
+export const RESUME_TEXT = `
+Sri Harsha Vallabhaneni — AI and Systems Engineer.
+
+Education:
+- MS Computer Science, University of Colorado Boulder — 4.0 GPA. Aug 2024 – May 2026.
+- BE (Bachelor of Engineering), BITS Pilani.
+
+Experience:
+- AI Project Engineer at Cisco (Capstone): Built enterprise incident triage system using LLMs and FastAPI. Reduced triage latency. Production-grade log triage assistant for network diagnostics; FastAPI microservices with MongoDB and Docker.
+- AI Intern at Empowered Margins: Built agentic AI pipelines for Excel data extraction and semantic header mapping. 85% reduction in manual processing. Multi-agent workflows for document processing.
+- SDE 2 at Darwinbox: Led RAG-based GenAI systems. Reduced hallucinations by 95%. Built RAG-based AI chatbots in production; observability pipelines with real-time logs and dashboards. Hyderabad, India. 2022–2024.
+
+Key Projects:
+- Exactly-Once Event Processing System: Systems engineering; idempotency keys for exactly-once semantics.
+- FaithCircle: Full stack application.
+- Urban Crime Forecasting: ML pipeline; Chicago crime data; XGBoost, geospatial visualization.
+
+Technical Stack: FastAPI, Python, RAG, LangChain, Docker, MongoDB, vector databases, LLMs, agentic AI, TypeScript, Next.js.
+`;
+
+export interface Education {
+  degree: string;
+  institution: string;
+  gpa?: string;
+  period: string;
+}
+
+export interface ExperienceItem {
+  id: string;
+  company: string;
+  role: string;
+  period: string;
+  location?: string;
+  bullets: string[];
+  slug: string;
+}
+
+export interface ProjectItem {
+  id: string;
+  slug: string;
+  title: string;
+  description: string;
+  longDescription: string;
+  category: string;
+  year: number;
+  technologies: string[];
+  image?: string;
+  githubUrl?: string;
+  liveUrl?: string;
+  featured: boolean;
+  metric?: string; // e.g. "95% Hallucination Reduction"
+}
+
+export const education: Education[] = [
+  {
+    degree: "MS Computer Science",
+    institution: "University of Colorado Boulder",
+    gpa: "4.0",
+    period: "Aug 2024 – May 2026",
+  },
+  {
+    degree: "BE",
+    institution: "BITS Pilani",
+    period: "Aug 2018 – May 2022",
+  },
+];
+
+export const experiences: ExperienceItem[] = [
+  {
+    id: "cisco",
+    slug: "cisco",
+    company: "Cisco",
+    role: "AI Project Engineer (Capstone)",
+    period: "2024",
+    location: "San Jose, CA",
+    bullets: [
+      "Built enterprise incident triage system using LLMs and FastAPI",
+      "Reduced triage latency; production-grade log triage assistant for network diagnostics",
+      "Designed FastAPI microservices with MongoDB and Docker for scalable deployment",
+    ],
+  },
+  {
+    id: "empowered-margins",
+    slug: "empowered-margins",
+    company: "Empowered Margins",
+    role: "AI Intern",
+    period: "2024",
+    location: "Remote",
+    bullets: [
+      "Built agentic AI pipelines for Excel data extraction and semantic header mapping",
+      "85% reduction in manual processing through automated workflows",
+      "Multi-agent workflows for document processing",
+    ],
+  },
+  {
+    id: "darwinbox",
+    slug: "darwinbox",
+    company: "Darwinbox",
+    role: "SDE 2",
+    period: "2022 – 2024",
+    location: "Hyderabad, India",
+    bullets: [
+      "Led RAG-based GenAI systems; reduced hallucinations by 95%",
+      "Built RAG-based AI chatbots used in production with high accuracy",
+      "Designed observability pipelines with real-time logs and dashboards",
+    ],
+  },
+];
+
+export const projects: ProjectItem[] = [
+  {
+    id: "cisco",
+    slug: "cisco",
+    title: "Enterprise Incident Triage System",
+    description: "LLM-powered incident triage with FastAPI. Reduced triage latency.",
+    longDescription:
+      "Built a production-grade incident triage system using LLMs and FastAPI for enterprise network diagnostics. The system analyzes log streams, detects anomalies, and reduces triage latency. Containerized microservices with MongoDB and Docker.",
+    category: "Backend Systems",
+    year: 2024,
+    technologies: ["Python", "FastAPI", "MongoDB", "Docker", "LLMs"],
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop",
+    featured: true,
+  },
+  {
+    id: "darwinbox",
+    slug: "darwinbox",
+    title: "RAG-based GenAI Systems",
+    description: "Production RAG chatbots with 95% hallucination reduction.",
+    longDescription:
+      "Led development of RAG-based GenAI systems at Darwinbox. Built production-ready chatbots with vector databases and LangChain, achieving 95% hallucination reduction. Integrated observability pipelines and real-time dashboards.",
+    category: "GenAI / LLMs",
+    year: 2023,
+    technologies: ["Python", "LangChain", "RAG", "Vector Databases", "FastAPI"],
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
+    featured: true,
+    metric: "95% Hallucination Reduction",
+  },
+  {
+    id: "empowered-margins",
+    slug: "empowered-margins",
+    title: "Agentic Document Processing",
+    description: "Agentic AI pipelines for Excel extraction. 85% reduction in manual processing.",
+    longDescription:
+      "Built agentic AI pipelines for Excel data extraction and semantic header mapping at Empowered Margins. Multi-agent workflows reduced manual processing by 85% while maintaining high accuracy.",
+    category: "GenAI / LLMs",
+    year: 2024,
+    technologies: ["Python", "LangChain", "Agentic AI", "Document Processing"],
+    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop",
+    featured: true,
+    metric: "85% Reduction in Manual Processing",
+  },
+  {
+    id: "exactly-once",
+    slug: "exactly-once",
+    title: "Exactly-Once Event Processing System",
+    description: "Systems engineering with idempotency keys for exactly-once semantics.",
+    longDescription:
+      "Designed and implemented an exactly-once event processing system using idempotency keys. Ensures each event is processed precisely once across distributed consumers, critical for financial and audit workflows.",
+    category: "Systems Engineering",
+    year: 2024,
+    technologies: ["Distributed Systems", "Idempotency", "Event Streaming"],
+    featured: true,
+  },
+  {
+    id: "faithcircle",
+    slug: "faithcircle",
+    title: "FaithCircle",
+    description: "Full stack application.",
+    longDescription: "Full stack project showcasing end-to-end development.",
+    category: "Full Stack",
+    year: 2023,
+    technologies: ["Full Stack", "Web"],
+    featured: false,
+  },
+  {
+    id: "urban-crime",
+    slug: "urban-crime",
+    title: "Urban Crime Forecasting",
+    description: "ML pipeline over 1M+ Chicago crime records with XGBoost and geospatial visualization.",
+    longDescription:
+      "Developed ML pipeline processing 1M+ Chicago crime records for forecasting and hotspot detection. XGBoost with geospatial visualization for resource allocation.",
+    category: "Data / ML",
+    year: 2023,
+    technologies: ["Python", "XGBoost", "Pandas", "Geospatial Analysis"],
+    featured: false,
+  },
+];
+
+export function getProjectBySlug(slug: string): ProjectItem | undefined {
+  return projects.find((p) => p.slug === slug || p.id === slug);
+}
+
+export function getExperienceBySlug(slug: string): ExperienceItem | undefined {
+  return experiences.find((e) => e.slug === slug || e.id === slug);
+}
+
+export function getBentoProjects(): ProjectItem[] {
+  return projects.filter(
+    (p) => p.slug === "cisco" || p.slug === "darwinbox" || p.slug === "empowered-margins"
+  );
+}
