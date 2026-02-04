@@ -143,7 +143,7 @@ export default function BentoGrid() {
             Engineering Excellence
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Production systems at Cisco, Darwinbox, and Empowered Margins
+            Production systems at Cisco, Empowered Margins and Darwinbox
           </p>
         </motion.div>
 
