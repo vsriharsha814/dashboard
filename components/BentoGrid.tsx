@@ -150,20 +150,26 @@ export default function BentoGrid() {
           </p>
         </motion.div>
 
-        <div className="overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
-          <div className="flex gap-6 min-w-0 items-stretch">
+        <div className="overflow-x-auto pb-4 w-full">
+          <div
+            className="grid gap-6 justify-center w-max mx-auto"
+            style={{
+              gridAutoFlow: "column",
+              gridAutoColumns: "minmax(280px, 320px)",
+            }}
+          >
             {cisco && (
-              <div className="shrink-0 w-[min(320px,85vw)] h-full">
+              <div className="min-h-0 h-full">
                 <CiscoTerminalCard project={cisco} />
               </div>
             )}
             {empowered && (
-              <div className="shrink-0 w-[min(320px,85vw)] h-full">
+              <div className="min-h-0 h-full">
                 <EmpoweredCard project={empowered} />
               </div>
             )}
             {darwinbox && (
-              <div className="shrink-0 w-[min(320px,85vw)] h-full">
+              <div className="min-h-0 h-full">
                 <DarwinboxMetricCard project={darwinbox} />
               </div>
             )}
