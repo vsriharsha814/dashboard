@@ -41,6 +41,8 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: #f97316;
   --grid-glow: oklch(0.78 0.16 40 / 0.18);
+  --scrollbar-track: oklch(0.96 0 0);
+  --scrollbar-thumb: oklch(0.75 0.02 40);
 }
 
 .dark {
@@ -78,11 +80,15 @@
   --sidebar-border: oklch(0.28 0.02 220);
   --sidebar-ring: #f97316;
   --grid-glow: oklch(0.78 0.16 40 / 0.16);
+  --scrollbar-track: oklch(0.18 0.02 220);
+  --scrollbar-thumb: oklch(0.35 0.04 220);
 
   /* Extra explicit tokens in case utilities resolve these directly */
   --color-primary: #f97316;
   --color-accent: #f97316;
   --color-ring: #f97316;
+  --scrollbar-track: oklch(0.18 0.02 220);
+  --scrollbar-thumb: oklch(0.35 0.04 220);
 }
 
 @theme inline {
@@ -130,6 +136,27 @@
 
 * {
   border-color: var(--border);
+}
+
+/* Themed scrollbars (WebKit + Firefox) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 
 body {
