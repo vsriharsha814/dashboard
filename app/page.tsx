@@ -6,6 +6,9 @@ import EducationSection from "@/components/EducationSection";
 import BentoProjectGrid from "@/components/BentoProjectGrid";
 import { experiences } from "@/lib/data";
 import { projects as legacyProjects } from "@/data/projects";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export default function Home() {
   return (
@@ -39,7 +42,15 @@ export default function Home() {
               Systems, GenAI, and full-stack work
             </p>
           </div>
-          <BentoProjectGrid projects={legacyProjects} />
+          <BentoProjectGrid projects={legacyProjects} horizontal />
+          <div className="mt-8 flex justify-center">
+            <Button asChild variant="outline" size="lg" className="gap-2">
+              <Link href="/projects">
+                View all projects on one page
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
         </div>
       </section>
       <section id="about" className="py-20 bg-background">

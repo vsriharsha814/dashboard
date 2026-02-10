@@ -59,7 +59,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     <main className="min-h-screen bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <Link
-          href="/#projects"
+          href="/projects"
           className="inline-flex items-center text-muted-foreground hover:text-foreground mb-8 transition-colors font-medium gap-1"
         >
           <ChevronLeft className="h-5 w-5" />

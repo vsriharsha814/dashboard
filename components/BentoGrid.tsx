@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { getBentoProjects, type ProjectItem } from "@/lib/data";
-import { Brain, FileSpreadsheet } from "lucide-react";
+import { Brain, FileSpreadsheet, ArrowRight } from "lucide-react";
 
 const FAKE_LOG_LINES = [
   "[INFO] router-01 BGP session established",
@@ -146,10 +147,32 @@ export default function BentoGrid() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cisco && <CiscoTerminalCard project={cisco} />}
-          {darwinbox && <DarwinboxMetricCard project={darwinbox} />}
-          {empowered && <EmpoweredCard project={empowered} />}
+        <div className="overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+          <div className="flex gap-6 min-w-0">
+            {cisco && (
+              <div className="shrink-0 w-[min(320px,85vw)]">
+                <CiscoTerminalCard project={cisco} />
+              </div>
+            )}
+            {darwinbox && (
+              <div className="shrink-0 w-[min(320px,85vw)]">
+                <DarwinboxMetricCard project={darwinbox} />
+              </div>
+            )}
+            {empowered && (
+              <div className="shrink-0 w-[min(320px,85vw)]">
+                <EmpoweredCard project={empowered} />
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="mt-8 flex justify-center">
+          <Button asChild variant="outline" size="lg" className="gap-2">
+            <Link href="/projects">
+              View all projects
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
         </div>
       </div>
     </section>

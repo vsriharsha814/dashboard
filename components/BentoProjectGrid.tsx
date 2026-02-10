@@ -8,6 +8,8 @@ import { Card, CardContent } from "@/components/ui/card";
 
 interface BentoProjectGridProps {
   projects: Project[];
+  /** When true, cards are in a single horizontal row with overflow-x scroll */
+  horizontal?: boolean;
 }
 
 function BentoProjectCard({ project }: { project: Project }) {
@@ -59,22 +61,36 @@ function BentoProjectCard({ project }: { project: Project }) {
   );
 }
 
-export default function BentoProjectGrid({ projects }: BentoProjectGridProps) {
+export default function BentoProjectGrid({
+  projects,
+  horizontal = false,
+}: BentoProjectGridProps) {
   if (projects.length === 0) return null;
+
+  const content = projects.map((project, index) => (
+    <motion.div
+      key={project.id}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: 0.05 * index }}
+      className={horizontal ? "shrink-0 w-[min(320px,85vw)]" : undefined}
+    >
+      <BentoProjectCard project={project} />
+    </motion.div>
+  ));
+
+  if (horizontal) {
+    return (
+      <div className="overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="flex gap-6">{content}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {projects.map((project, index) => (
-        <motion.div
-          key={project.id}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.05 * index }}
-        >
-          <BentoProjectCard project={project} />
-        </motion.div>
-      ))}
+      {content}
     </div>
   );
 }
