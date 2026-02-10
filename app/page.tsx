@@ -46,7 +46,7 @@ export default function Home() {
           <div className="mt-8 flex justify-center">
             <Button asChild variant="outline" size="lg" className="gap-2">
               <Link href="/projects">
-                View all projects on one page
+                View all projects
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
