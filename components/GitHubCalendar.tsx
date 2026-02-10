@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ActivityCalendar } from "react-activity-calendar";
+import { useTheme } from "./ThemeProvider";
 
 type ContributionDay = {
   date: string;
@@ -63,6 +64,8 @@ export default function GitHubCalendar() {
     fetchContributions();
   }, []);
 
+  const { theme } = useTheme();
+
   return (
     <div className="rounded-lg border border-border bg-card p-4">
       <p className="text-sm font-medium text-foreground mb-3">Activity</p>
@@ -70,21 +73,21 @@ export default function GitHubCalendar() {
         data={data}
         theme={{
           light: [
-            "#0f172a",
-            "oklch(0.8 0.18 40 / 0.3)",
-            "oklch(0.8 0.18 40 / 0.6)",
-            "oklch(0.8 0.18 40 / 0.8)",
-            "oklch(0.8 0.18 40)",
+            "#f3f4f6", // light background
+            "#fee2c3", // very light orange
+            "#fed7aa", // light orange
+            "#fb923c", // primary orange
+            "#c2410c", // deep orange
           ],
           dark: [
-            "#0f172a",
-            "oklch(0.8 0.18 40 / 0.3)",
-            "oklch(0.8 0.18 40 / 0.6)",
-            "oklch(0.8 0.18 40 / 0.8)",
-            "oklch(0.8 0.18 40)",
+            "#020617", // dark background (near slate-950)
+            "#78350f", // very dark muted orange
+            "#ea580c", // strong orange
+            "#f97316", // bright orange
+            "#fed7aa", // highlight light orange
           ],
         }}
-        colorScheme="dark"
+        colorScheme={theme}
         blockSize={10}
         blockRadius={2}
         fontSize={12}
