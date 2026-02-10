@@ -19,13 +19,14 @@ const FAKE_LOG_LINES = [
 function CiscoTerminalCard({ project }: { project: ProjectItem }) {
   return (
     <motion.div
+      className="h-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
       <Link href={`/projects/${project.slug}`} className="block h-full">
-        <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-colors group">
+        <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-colors group flex flex-col">
           <CardHeader className="pb-2">
             <div className="flex items-center gap-2 text-muted-foreground">
               <span className="h-3 w-3 rounded-full bg-red-500/80" />
@@ -40,8 +41,8 @@ function CiscoTerminalCard({ project }: { project: ProjectItem }) {
               {project.description}
             </p>
           </CardHeader>
-          <CardContent className="pt-0">
-            <div className="rounded-md bg-black/60 border border-border p-3 font-mono text-xs text-emerald-400/90 overflow-hidden">
+          <CardContent className="pt-0 flex-1 flex flex-col min-h-0">
+            <div className="rounded-md bg-black/60 border border-border p-3 font-mono text-xs text-emerald-400/90 overflow-hidden flex-1 min-h-0">
               <div className="space-y-0.5 animate-pulse-slow">
                 {FAKE_LOG_LINES.map((line, i) => (
                   <div key={i} className="flex gap-2">
@@ -64,10 +65,11 @@ function DarwinboxMetricCard({ project }: { project: ProjectItem }) {
   const metric = project.metric ?? "95% Hallucination Reduction";
   return (
     <motion.div
+      className="h-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.1 }}
+      transition={{ duration: 0.5, delay: 0.2 }}
     >
       <Link href={`/projects/${project.slug}`} className="block h-full">
         <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-colors group flex flex-col justify-between">
@@ -98,13 +100,14 @@ function DarwinboxMetricCard({ project }: { project: ProjectItem }) {
 function EmpoweredCard({ project }: { project: ProjectItem }) {
   return (
     <motion.div
+      className="h-full"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: 0.2 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
     >
       <Link href={`/projects/${project.slug}`} className="block h-full">
-        <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-colors group">
+        <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-colors group flex flex-col justify-between">
           <CardHeader>
             <div className="flex items-center gap-2 text-primary">
               <FileSpreadsheet className="h-5 w-5" />
@@ -148,20 +151,20 @@ export default function BentoGrid() {
         </motion.div>
 
         <div className="overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
-          <div className="flex gap-6 min-w-0">
+          <div className="flex gap-6 min-w-0 items-stretch">
             {cisco && (
-              <div className="shrink-0 w-[min(320px,85vw)]">
+              <div className="shrink-0 w-[min(320px,85vw)] h-full">
                 <CiscoTerminalCard project={cisco} />
               </div>
             )}
-            {darwinbox && (
-              <div className="shrink-0 w-[min(320px,85vw)]">
-                <DarwinboxMetricCard project={darwinbox} />
+            {empowered && (
+              <div className="shrink-0 w-[min(320px,85vw)] h-full">
+                <EmpoweredCard project={empowered} />
               </div>
             )}
-            {empowered && (
-              <div className="shrink-0 w-[min(320px,85vw)]">
-                <EmpoweredCard project={empowered} />
+            {darwinbox && (
+              <div className="shrink-0 w-[min(320px,85vw)] h-full">
+                <DarwinboxMetricCard project={darwinbox} />
               </div>
             )}
           </div>
