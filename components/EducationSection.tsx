@@ -2,7 +2,7 @@ import { education } from "@/lib/data";
 import { GraduationCap, Award } from "lucide-react";
 
 const COURSEWORK = {
-  "CU Boulder": [
+  "University of Colorado Boulder": [
     "Advanced Machine Learning",
     "Distributed Systems",
     "Database Systems",
