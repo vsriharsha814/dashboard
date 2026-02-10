@@ -52,7 +52,17 @@ export default function GitHubCalendar() {
         const json = await res.json();
 
         if (Array.isArray(json.contributions)) {
-          setData(json.contributions as ContributionDay[]);
+          // Strip any color information from the API so the calendar
+          // uses our site-wide orange theme instead of teal defaults.
+          const normalized: ContributionDay[] = json.contributions.map(
+            (c: { date: string; count: number; level: number }) => ({
+              date: c.date,
+              count: c.count,
+              level: c.level,
+            })
+          );
+
+          setData(normalized);
         }
       } catch (error) {
         console.error("Error loading GitHub contributions", error);
