@@ -204,6 +204,28 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </div>
             )}
 
+            {project.slug === "faithcircle" && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
+                  Technical Deep-Dive: Flutter Mobile App & Admin Dashboard
+                </h2>
+                <div className="bg-muted/50 rounded-lg border border-border p-6">
+                  <p className="text-muted-foreground leading-relaxed mb-4">
+                    FaithCircle showcases full-stack mobile development with Flutter and a supporting admin experience:
+                  </p>
+                  <ul className="list-disc list-inside space-y-2 text-muted-foreground">
+                    <li><strong>Flutter app:</strong> Cross-platform iOS and Android build with Dart; shared UI and business logic</li>
+                    <li><strong>State management:</strong> Consistent app state and data flow across screens</li>
+                    <li><strong>REST APIs:</strong> Mobile app integration with backend services</li>
+                    <li><strong>Admin dashboard:</strong> Web-based dashboard for content and user management supporting the app</li>
+                  </ul>
+                  <p className="text-muted-foreground leading-relaxed mt-4">
+                    The project demonstrates end-to-end ownership from mobile UX to backend and admin tooling.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {(hasRepoUrl || hasDemoUrl) && (
               <div className="flex flex-col sm:flex-row gap-4">
                 {hasRepoUrl && (

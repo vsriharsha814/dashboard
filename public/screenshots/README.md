@@ -15,16 +15,19 @@ This directory contains project screenshots organized by project slug.
   │   └── ...
   ├── empowered-margins/
   │   └── ...
-  └── exactly-once/
+  ├── exactly-once/
+  │   └── ...
+  └── faithcircle/
       └── ...
 ```
 
 ## Usage
 
-1. Create a folder named after the project slug (e.g., `cisco`, `darwinbox`, `exactly-once`)
+1. Create a folder named after the project slug (e.g., `cisco`, `darwinbox`, `faithcircle`)
 2. Add image files (`.jpg`, `.jpeg`, `.png`, `.webp`, `.gif`, `.svg`) to the folder
-3. The project page will automatically detect and display them in a gallery
-4. If a folder is empty or doesn't exist, the "Screenshots" section will be hidden
+3. **Mobile/portrait screenshots:** Put them in a `mobile/` subfolder (e.g. `faithcircle/mobile/`) so they display in portrait (9:16) without cropping
+4. The project page will automatically detect and display all images (including from subfolders) in a gallery
+5. If a folder is empty or doesn't exist, the "Screenshots" section will be hidden
 
 ## Supported Image Formats
 

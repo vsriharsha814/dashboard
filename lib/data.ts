@@ -17,7 +17,7 @@ Experience:
 
 Key Projects:
 - Exactly-Once Event Processing System: Systems engineering; idempotency keys for exactly-once semantics.
-- FaithCircle: Full stack application.
+- FaithCircle: Flutter mobile app with admin dashboard; cross-platform iOS/Android.
 - Urban Crime Forecasting: ML pipeline; Chicago crime data; XGBoost, geospatial visualization.
 
 Technical Stack: FastAPI, Python, RAG, LangChain, Docker, MongoDB, vector databases, LLMs, agentic AI, TypeScript, Next.js.
@@ -112,6 +112,17 @@ export const experiences: ExperienceItem[] = [
       "Designed observability pipelines with real-time logs and dashboards",
     ],
   },
+  {
+    id: "malhar-industries",
+    slug: "malhar-industries",
+    company: "Malhar Industries",
+    role: "Intern",
+    period: "May – July 2020",
+    bullets: [
+      "Completed internship in software and systems support",
+      "Contributed to development and operational workflows",
+    ],
+  },
 ];
 
 export const projects: ProjectItem[] = [
@@ -172,11 +183,21 @@ export const projects: ProjectItem[] = [
     id: "faithcircle",
     slug: "faithcircle",
     title: "FaithCircle",
-    description: "Full stack application.",
-    longDescription: "Full stack project showcasing end-to-end development.",
-    category: "Full Stack",
+    description:
+      "Cross-platform mobile app built with Flutter, with an admin dashboard for content and user management.",
+    longDescription:
+      "FaithCircle is a full-stack mobile application built with Flutter for iOS and Android, demonstrating end-to-end mobile development. The app is supported by a web-based admin dashboard for managing content and users. The project showcases cross-platform UI with Flutter/Dart, state management, and integration with a backend and admin tooling.",
+    category: "Full Stack / Mobile",
     year: 2023,
-    technologies: ["Full Stack", "Web"],
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Mobile Development",
+      "Admin Dashboard",
+      "Cross-Platform",
+      "REST APIs",
+    ],
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop",
     featured: false,
   },
   {
