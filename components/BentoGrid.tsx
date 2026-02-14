@@ -177,7 +177,7 @@ export default function BentoGrid() {
         </div>
         <div className="mt-8 flex justify-center">
           <Button asChild variant="outline" size="lg" className="gap-2">
-            <Link href="/projects">
+            <Link href="/experience">
               View all work experiences
               <ArrowRight className="h-4 w-4" />
             </Link>
