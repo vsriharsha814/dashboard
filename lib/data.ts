@@ -134,24 +134,31 @@ export const projects: ProjectItem[] = [
     longDescription:
       "Built a production-grade incident triage system using LLMs and FastAPI for enterprise network diagnostics. The system analyzes log streams, detects anomalies, and reduces triage latency. Containerized microservices with MongoDB and Docker.",
     category: "Backend Systems",
-    year: 2024,
+    year: 2025,
     technologies: ["Python", "FastAPI", "MongoDB", "Docker", "LLMs"],
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop",
     featured: true,
   },
   {
-    id: "darwinbox",
-    slug: "darwinbox",
-    title: "RAG-based GenAI Systems",
-    description: "Production RAG chatbots with 95% hallucination reduction.",
+    id: "faithcircle",
+    slug: "faithcircle",
+    title: "FaithCircle",
+    description:
+      "Cross-platform mobile app built with Flutter, with an admin dashboard for content and user management.",
     longDescription:
-      "Led development of RAG-based GenAI systems at Darwinbox. Built production-ready chatbots with vector databases and LangChain, achieving 95% hallucination reduction. Integrated observability pipelines and real-time dashboards.",
-    category: "GenAI / LLMs",
-    year: 2023,
-    technologies: ["Python", "LangChain", "RAG", "Vector Databases", "FastAPI"],
-    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
-    featured: true,
-    metric: "95% Hallucination Reduction",
+      "FaithCircle is a full-stack mobile application built with Flutter for iOS and Android, demonstrating end-to-end mobile development. The app is supported by a web-based admin dashboard for managing content and users. The project showcases cross-platform UI with Flutter/Dart, state management, and integration with a backend and admin tooling.",
+    category: "Full Stack / Mobile",
+    year: 2026,
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Mobile Development",
+      "Admin Dashboard",
+      "Cross-Platform",
+      "REST APIs",
+    ],
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop",
+    featured: false,
   },
   {
     id: "empowered-margins",
@@ -175,30 +182,9 @@ export const projects: ProjectItem[] = [
     longDescription:
       "Designed and implemented an exactly-once event processing system using idempotency keys. Ensures each event is processed precisely once across distributed consumers, critical for financial and audit workflows.",
     category: "Systems Engineering",
-    year: 2024,
+    year: 2025,
     technologies: ["Distributed Systems", "Idempotency", "Event Streaming"],
     featured: true,
-  },
-  {
-    id: "faithcircle",
-    slug: "faithcircle",
-    title: "FaithCircle",
-    description:
-      "Cross-platform mobile app built with Flutter, with an admin dashboard for content and user management.",
-    longDescription:
-      "FaithCircle is a full-stack mobile application built with Flutter for iOS and Android, demonstrating end-to-end mobile development. The app is supported by a web-based admin dashboard for managing content and users. The project showcases cross-platform UI with Flutter/Dart, state management, and integration with a backend and admin tooling.",
-    category: "Full Stack / Mobile",
-    year: 2023,
-    technologies: [
-      "Flutter",
-      "Dart",
-      "Mobile Development",
-      "Admin Dashboard",
-      "Cross-Platform",
-      "REST APIs",
-    ],
-    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800&h=600&fit=crop",
-    featured: false,
   },
   {
     id: "urban-crime",
@@ -208,9 +194,23 @@ export const projects: ProjectItem[] = [
     longDescription:
       "Developed ML pipeline processing 1M+ Chicago crime records for forecasting and hotspot detection. XGBoost with geospatial visualization for resource allocation.",
     category: "Data / ML",
-    year: 2023,
+    year: 2025,
     technologies: ["Python", "XGBoost", "Pandas", "Geospatial Analysis"],
     featured: false,
+  },
+  {
+    id: "darwinbox",
+    slug: "darwinbox",
+    title: "RAG-based GenAI Systems",
+    description: "Production RAG chatbots with 95% hallucination reduction.",
+    longDescription:
+      "Led development of RAG-based GenAI systems at Darwinbox. Built production-ready chatbots with vector databases and LangChain, achieving 95% hallucination reduction. Integrated observability pipelines and real-time dashboards.",
+    category: "GenAI / LLMs",
+    year: 2022,
+    technologies: ["Python", "LangChain", "RAG", "Vector Databases", "FastAPI"],
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
+    featured: true,
+    metric: "95% Hallucination Reduction",
   },
 ];
 

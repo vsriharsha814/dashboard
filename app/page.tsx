@@ -4,8 +4,7 @@ import ExperienceSection from "@/components/ExperienceSection";
 import SkillsSection from "@/components/SkillsSection";
 import EducationSection from "@/components/EducationSection";
 import BentoProjectGrid from "@/components/BentoProjectGrid";
-import { experiences } from "@/lib/data";
-import { projects as legacyProjects } from "@/data/projects";
+import { experiences, projects } from "@/lib/data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -42,7 +41,7 @@ export default function Home() {
               Systems, GenAI, and full-stack work
             </p>
           </div>
-          <BentoProjectGrid projects={legacyProjects} horizontal />
+          <BentoProjectGrid projects={projects} horizontal />
           <div className="mt-8 flex justify-center">
             <Button asChild variant="outline" size="lg" className="gap-2">
               <Link href="/projects">

@@ -1,24 +1,29 @@
 "use client";
 
-import { Project } from "@/types/project";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
+import type { ProjectItem } from "@/lib/data";
+
+const PLACEHOLDER_IMAGE =
+  "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop";
 
 interface BentoProjectGridProps {
-  projects: Project[];
+  projects: ProjectItem[];
   /** When true, cards are in a single horizontal row with overflow-x scroll */
   horizontal?: boolean;
 }
 
-function BentoProjectCard({ project }: { project: Project }) {
+function BentoProjectCard({ project }: { project: ProjectItem }) {
+  const href = `/projects/${project.slug ?? project.id}`;
+  const imageSrc = project.image ?? PLACEHOLDER_IMAGE;
   return (
-    <Link href={`/projects/${project.id}`} className="block h-full">
+    <Link href={href} className="block h-full">
       <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-all duration-300 group flex flex-col">
         <div className="relative h-40 w-full overflow-hidden bg-muted shrink-0">
           <Image
-            src={project.image}
+            src={imageSrc}
             alt={project.title}
             fill
             className="object-cover group-hover:opacity-90 transition-opacity duration-200"
