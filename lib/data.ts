@@ -170,7 +170,7 @@ export const projects: ProjectItem[] = [
     category: "GenAI / LLMs",
     year: 2024,
     technologies: ["Python", "LangChain", "Agentic AI", "Document Processing"],
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop",
     featured: true,
     metric: "85% Reduction in Manual Processing",
   },
@@ -184,6 +184,7 @@ export const projects: ProjectItem[] = [
     category: "Systems Engineering",
     year: 2025,
     technologies: ["Distributed Systems", "Idempotency", "Event Streaming"],
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=600&fit=crop",
     featured: true,
   },
   {
@@ -196,6 +197,7 @@ export const projects: ProjectItem[] = [
     category: "Data / ML",
     year: 2025,
     technologies: ["Python", "XGBoost", "Pandas", "Geospatial Analysis"],
+    image: "https://images.unsplash.com/photo-1506377295352-e3154d43ea9e?w=800&h=600&fit=crop",
     featured: false,
   },
   {
