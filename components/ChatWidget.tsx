@@ -110,9 +110,10 @@ function ChatWidgetContent({
           className="w-full sm:max-w-md flex flex-col p-0 bg-background border-border"
         >
           <SheetHeader className="p-4 border-b border-border">
-            <SheetTitle className="text-foreground">Hire Harsha AI</SheetTitle>
+            <SheetTitle className="text-foreground">Glitch</SheetTitle>
             <p className="text-sm text-muted-foreground font-normal">
-              Your recruiter-style copilot. {usageToday}/{MAX_MESSAGES_PER_DAY} questions used today.
+              I answer questions about Harsha&apos;s skills, projects, and experience.{" "}
+              {usageToday}/{MAX_MESSAGES_PER_DAY} questions used today.
             </p>
           </SheetHeader>
 
@@ -121,11 +122,11 @@ function ChatWidgetContent({
               <div className="space-y-4">
                 <div className="rounded-lg border border-border bg-muted/40 p-3">
                   <p className="text-sm font-medium text-foreground">
-                    👋 Meet <span className="font-semibold">Hire Harsha AI</span>
+                    👋 Meet <span className="font-semibold">Glitch</span>
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Ask like a hiring manager and it will pitch Harsha based on real projects, impact,
-                    and systems work &mdash; tuned to make your decision easy.
+                    I&apos;m Harsha&apos;s chat companion &mdash; ask me anything related to his background,
+                    skills, and projects, and I&apos;ll give clear, honest answers.
                   </p>
                 </div>
                 <div className="space-y-2">
@@ -157,7 +158,7 @@ function ChatWidgetContent({
                 )}
               >
                 <span className="font-medium text-muted-foreground text-xs block mb-1">
-                  {m.role === "user" ? "You" : "Hire Harsha AI"}
+                  {m.role === "user" ? "You" : "Glitch"}
                 </span>
                 <div className="whitespace-pre-wrap">
                   {m.parts
