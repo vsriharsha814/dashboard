@@ -53,6 +53,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   const screenshots = await getProjectScreenshots(project.slug);
   const hasDemoUrl = project.demoUrl || project.liveUrl;
+  const demoUrl = project.demoUrl || project.liveUrl;
   const hasRepoUrl = project.repoUrl || project.githubUrl;
 
   return (
@@ -126,6 +127,26 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
             {screenshots.length > 0 && (
               <ProjectGallery images={screenshots} projectTitle={project.title} />
+            )}
+
+            {project.slug === "operation-classified" && demoUrl && (
+              <div className="mb-8">
+                <h2 className="text-2xl font-bold text-foreground mb-4">
+                  Live Agent Roster Screen
+                </h2>
+                <div className="aspect-video w-full rounded-lg border border-border overflow-hidden bg-black">
+                  <iframe
+                    src={demoUrl}
+                    className="w-full h-full"
+                    loading="lazy"
+                    allow="fullscreen"
+                  />
+                </div>
+                <p className="text-xs text-muted-foreground mt-2">
+                  This iframe embeds the live big-screen roster from{" "}
+                  <span className="underline underline-offset-2">itbheist.vercel.app</span>.
+                </p>
+              </div>
             )}
 
             {(project.slug === "exactly-once" || project.id === "exactly-once") && (

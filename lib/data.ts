@@ -201,6 +201,30 @@ export const projects: ProjectItem[] = [
     featured: false,
   },
   {
+    id: "operation-classified",
+    slug: "operation-classified",
+    title: "In The Buff — Operation Classified",
+    description:
+      "Live, spy-themed concert experience with agent check-in and a real-time big-screen roster powered by Firestore.",
+    longDescription:
+      "Operation Classified powers a live, spy-themed experience for the In The Buff a cappella audience. The system has a narrative briefing page, a phone-friendly agent check-in flow for uploading photos and aliases, and a projector-ready big-screen roster that feels like a classified surveillance console. Agent photos are cropped into passport-style portraits, tagged with codenames, stories, and status, and streamed into a continuously scrolling 10-wide data wall. A central focus card cycles through agents with threat levels, coordinates, and mission text, while layered HUD effects, scanlines, and hex grids make the venue feel like mission control.",
+    category: "Creative / Live Systems",
+    year: 2026,
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Firebase",
+      "Firestore",
+      "Realtime UI",
+    ],
+    image:
+      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&h=600&fit=crop",
+    liveUrl: "https://itbheist.vercel.app",
+    demoUrl: "https://itbheist.vercel.app/screen",
+    featured: true,
+  },
+  {
     id: "darwinbox",
     slug: "darwinbox",
     title: "RAG-based GenAI Systems",
