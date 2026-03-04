@@ -14,7 +14,10 @@ import {
   saveStoredMessages,
   getUsageToday,
   incrementUsageToday,
-  MAX_MESSAGES_PER_DAY,
+  getUsageThisMinute,
+  incrementUsageThisMinute,
+  MAX_REQUESTS_PER_DAY,
+  MAX_REQUESTS_PER_MINUTE,
 } from "@/lib/chat-storage";
 
 const STARTER_QUESTIONS = [
@@ -104,6 +107,7 @@ function ChatWidgetContent({
     onFinish: ({ messages: nextMessages }) => {
       saveStoredMessages(nextMessages);
       incrementUsageToday();
+      incrementUsageThisMinute();
     },
     transport: new DefaultChatTransport({
       api: "/api/chat",
@@ -120,7 +124,10 @@ function ChatWidgetContent({
 
   const isLoading = status === "streaming" || status === "submitted";
   const usageToday = getUsageToday();
-  const atLimit = usageToday >= MAX_MESSAGES_PER_DAY;
+  const usageThisMinute = getUsageThisMinute();
+  const atDayLimit = usageToday >= MAX_REQUESTS_PER_DAY;
+  const atMinuteLimit = usageThisMinute >= MAX_REQUESTS_PER_MINUTE;
+  const atLimit = atDayLimit || atMinuteLimit;
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -132,9 +139,15 @@ function ChatWidgetContent({
     e.preventDefault();
     setLimitReachedMessage(null);
     if (!input.trim() || isLoading) return;
-    if (atLimit) {
+    if (atDayLimit) {
       setLimitReachedMessage(
-        `Daily limit reached (${MAX_MESSAGES_PER_DAY} messages). Resets at midnight.`
+        `Glitch has hit its daily limit of ${MAX_REQUESTS_PER_DAY} questions. Even AI needs a reset — try again tomorrow.`
+      );
+      return;
+    }
+    if (atMinuteLimit) {
+      setLimitReachedMessage(
+        `Whoa, speedrunner. I can only handle ${MAX_REQUESTS_PER_MINUTE} questions per minute — give me a couple of seconds to cool down.`
       );
       return;
     }
@@ -162,7 +175,7 @@ function ChatWidgetContent({
             <SheetTitle className="text-foreground">Glitch</SheetTitle>
             <p className="text-sm text-muted-foreground font-normal">
               I answer questions about Harsha&apos;s skills, projects, and experience.{" "}
-              {usageToday}/{MAX_MESSAGES_PER_DAY} questions used today.
+              {usageToday}/{MAX_REQUESTS_PER_DAY} today · up to {MAX_REQUESTS_PER_MINUTE}/min.
             </p>
           </SheetHeader>
 

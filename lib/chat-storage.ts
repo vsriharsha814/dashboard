@@ -8,8 +8,10 @@ import type { UIMessage } from "ai";
 const CHAT_ID_KEY = "portfolio-chat-id";
 const CHAT_MESSAGES_KEY = "portfolio-chat-messages";
 const CHAT_USAGE_KEY = "portfolio-chat-usage";
+const CHAT_MINUTE_USAGE_KEY = "portfolio-chat-usage-minute";
 
-export const MAX_MESSAGES_PER_DAY = 30;
+export const MAX_REQUESTS_PER_DAY = 20;
+export const MAX_REQUESTS_PER_MINUTE = 5;
 
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const FOUR_HOURS_MS = 4 * 60 * 60 * 1000;
@@ -161,6 +163,43 @@ export function incrementUsageToday(): void {
     const prev: UsageState = raw ? (JSON.parse(raw) as UsageState) : { date: today, count: 0 };
     const count = prev.date === today ? prev.count + 1 : 1;
     localStorage.setItem(CHAT_USAGE_KEY, JSON.stringify({ date: today, count }));
+  } catch {
+    // ignore
+  }
+}
+
+interface MinuteUsageState {
+  bucket: string;
+  count: number;
+}
+
+function getCurrentMinuteBucket(): string {
+  // e.g. 2026-03-04T18:42
+  return new Date().toISOString().slice(0, 16);
+}
+
+export function getUsageThisMinute(): number {
+  if (typeof window === "undefined") return 0;
+  try {
+    const raw = localStorage.getItem(CHAT_MINUTE_USAGE_KEY);
+    if (!raw) return 0;
+    const { bucket, count } = JSON.parse(raw) as MinuteUsageState;
+    return bucket === getCurrentMinuteBucket() ? count : 0;
+  } catch {
+    return 0;
+  }
+}
+
+export function incrementUsageThisMinute(): void {
+  if (typeof window === "undefined") return;
+  try {
+    const bucket = getCurrentMinuteBucket();
+    const raw = localStorage.getItem(CHAT_MINUTE_USAGE_KEY);
+    const prev: MinuteUsageState = raw
+      ? (JSON.parse(raw) as MinuteUsageState)
+      : { bucket, count: 0 };
+    const count = prev.bucket === bucket ? prev.count + 1 : 1;
+    localStorage.setItem(CHAT_MINUTE_USAGE_KEY, JSON.stringify({ bucket, count }));
   } catch {
     // ignore
   }
