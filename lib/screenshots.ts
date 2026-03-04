@@ -18,7 +18,12 @@ export async function getProjectScreenshots(projectSlug: string): Promise<string
     const screenshotsDir = join(process.cwd(), "public", "screenshots", projectSlug);
     const entries = await readdir(screenshotsDir, { recursive: true });
     const images = (Array.isArray(entries) ? entries : [])
-      .filter((entry): entry is string => typeof entry === "string" && isImageFile(entry))
+      .filter(
+        (entry): entry is string =>
+          typeof entry === "string" &&
+          isImageFile(entry) &&
+          !entry.toLowerCase().endsWith("placeholder.svg")
+      )
       .map((relPath) => `/screenshots/${projectSlug}/${relPath}`.replace(/\/+/g, "/"))
       .sort();
     return images;
