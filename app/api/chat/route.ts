@@ -33,11 +33,12 @@ export async function POST(req: Request) {
   } catch (error: unknown) {
     console.error("Error in /api/chat:", error);
 
-    const statusCode = typeof error === "object" && error !== null ? (error as { statusCode?: number }).statusCode : undefined;
-    const message =
-      typeof error === "object" && error !== null
-        ? (error as { message?: string }).message
-        : undefined;
+    const errObj = typeof error === "object" && error !== null ? (error as Record<string, unknown>) : undefined;
+    const maybeStatus = errObj?.statusCode ?? (errObj?.lastError as { statusCode?: number } | undefined)?.statusCode;
+    const statusCode: number | undefined = typeof maybeStatus === "number" ? maybeStatus : undefined;
+    const maybeMessage =
+      errObj?.message ?? (errObj?.lastError as { message?: string } | undefined)?.message;
+    const message: string | undefined = typeof maybeMessage === "string" ? maybeMessage : undefined;
 
     // If the Gemini model is not found, log the list of available models
     if (statusCode === 404 && message?.includes("models/")) {
@@ -66,8 +67,12 @@ export async function POST(req: Request) {
       }
     }
 
-    // Handle upstream Gemini rate limiting with a friendly message
-    if (statusCode === 429) {
+    // Handle upstream Gemini rate limiting (including AI_RetryError wrapping) with a friendly message
+    if (
+      statusCode === 429 ||
+      errObj?.reason === "maxRetriesExceeded" ||
+      message?.includes("You exceeded your current quota")
+    ) {
       return new Response(
         JSON.stringify({
           error:
