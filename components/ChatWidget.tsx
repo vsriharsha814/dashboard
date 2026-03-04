@@ -203,10 +203,10 @@ function ChatWidgetContent({
               <div
                 key={m.id}
                 className={cn(
-                  "rounded-lg p-3 text-sm",
+                  "rounded-lg p-3 text-sm border shadow-sm",
                   m.role === "user"
-                    ? "ml-8 bg-primary/10 text-foreground border border-primary/20"
-                    : "mr-8 bg-muted text-foreground border border-border"
+                    ? "ml-8 bg-card text-foreground border-border"
+                    : "mr-8 bg-muted/70 text-foreground border-border/80"
                 )}
               >
                 <span className="font-medium text-muted-foreground text-xs block mb-1">
