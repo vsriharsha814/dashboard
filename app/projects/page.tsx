@@ -14,6 +14,7 @@ export const metadata = {
 };
 
 export default function AllProjectsPage() {
+  const sortedProjects = [...projects].sort((a, b) => b.year - a.year);
   return (
     <main className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -35,7 +36,7 @@ export default function AllProjectsPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {projects.map((project) => (
+          {sortedProjects.map((project) => (
             <Link
               key={project.slug}
               href={`/projects/${project.slug}`}

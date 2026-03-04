@@ -72,7 +72,9 @@ export default function BentoProjectGrid({
 }: BentoProjectGridProps) {
   if (projects.length === 0) return null;
 
-  const content = projects.map((project, index) => (
+  const sortedProjects = [...projects].sort((a, b) => b.year - a.year);
+
+  const content = sortedProjects.map((project, index) => (
     <motion.div
       key={project.id}
       initial={{ opacity: 0, y: 20 }}
