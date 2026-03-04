@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import type { UIMessage } from "ai";
@@ -45,6 +45,47 @@ function renderWithBold(text: string) {
   });
 }
 
+function renderMessageContent(text: string) {
+  const lines = text.split("\n");
+  const blocks: JSX.Element[] = [];
+  let listItems: string[] = [];
+
+  const flushList = () => {
+    if (listItems.length === 0) return;
+    blocks.push(
+      <ul key={`list-${blocks.length}`} className="list-disc list-inside space-y-1">
+        {listItems.map((item, idx) => (
+          <li key={idx}>{renderWithBold(item)}</li>
+        ))}
+      </ul>
+    );
+    listItems = [];
+  };
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    const isBullet = trimmed.startsWith("* ") || trimmed.startsWith("- ");
+
+    if (isBullet) {
+      const content = trimmed.slice(2);
+      listItems.push(content);
+    } else {
+      flushList();
+      if (trimmed.length > 0) {
+        blocks.push(
+          <p key={`p-${blocks.length}`} className="leading-relaxed">
+            {renderWithBold(line)}
+          </p>
+        );
+      }
+    }
+  }
+
+  flushList();
+
+  return blocks;
+}
+
 function ChatWidgetContent({
   chatId,
   initialMessages,
@@ -55,6 +96,7 @@ function ChatWidgetContent({
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [limitReachedMessage, setLimitReachedMessage] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
 
   const { messages, sendMessage, status } = useChat({
     id: chatId,
@@ -79,6 +121,12 @@ function ChatWidgetContent({
   const isLoading = status === "streaming" || status === "submitted";
   const usageToday = getUsageToday();
   const atLimit = usageToday >= MAX_MESSAGES_PER_DAY;
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages.length, isLoading]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -118,7 +166,10 @@ function ChatWidgetContent({
             </p>
           </SheetHeader>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+          <div
+            ref={scrollRef}
+            className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0"
+          >
             {messages.length === 0 && (
               <div className="space-y-4">
                 <div className="rounded-lg border border-border bg-muted/40 p-3">
@@ -161,11 +212,11 @@ function ChatWidgetContent({
                 <span className="font-medium text-muted-foreground text-xs block mb-1">
                   {m.role === "user" ? "You" : "Glitch"}
                 </span>
-                <div className="whitespace-pre-wrap">
+                <div className="space-y-1">
                   {m.parts
                     ?.filter((p): p is { type: "text"; text: string } => p.type === "text")
                     .map((p, i) => (
-                      <span key={i}>{renderWithBold(p.text)}</span>
+                      <div key={i}>{renderMessageContent(p.text)}</div>
                     )) ?? null}
                 </div>
               </div>
