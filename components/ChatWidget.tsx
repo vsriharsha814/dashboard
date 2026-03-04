@@ -100,10 +100,9 @@ function ChatWidgetContent({
 }) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
-  const [limitReachedMessage, setLimitReachedMessage] = useState<string | null>(null);
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  const { messages, sendMessage, status, error } = useChat({
+  const { messages, sendMessage, status, error, setMessages } = useChat({
     id: chatId,
     messages: initialMessages,
     onFinish: ({ messages: nextMessages }) => {
@@ -130,58 +129,98 @@ function ChatWidgetContent({
   const sleepingToday = isGlitchSleepingToday();
   const atDayLimit = usageToday >= MAX_REQUESTS_PER_DAY;
   const atMinuteLimit = usageThisMinute >= MAX_REQUESTS_PER_MINUTE;
-  const atLimit = atDayLimit || atMinuteLimit || sleepingToday;
+  const atHardLimit = atDayLimit || atMinuteLimit; // local app limits
 
-  // Surface backend quota errors and put Glitch to sleep for today.
+  const appendGlitchMessage = (text: string) => {
+    const id = `local-${Date.now()}`;
+    setMessages((prev) => [
+      ...prev,
+      {
+        id,
+        role: "assistant",
+        parts: [{ type: "text", text }],
+      } as UIMessage,
+    ]);
+  };
+
+  const appendLocalExchange = (userText: string, assistantText: string) => {
+    const userId = `local-user-${Date.now()}`;
+    const assistantId = `local-assistant-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    setMessages((prev) => [
+      ...prev,
+      {
+        id: userId,
+        role: "user",
+        parts: [{ type: "text", text: userText }],
+      } as UIMessage,
+      {
+        id: assistantId,
+        role: "assistant",
+        parts: [{ type: "text", text: assistantText }],
+      } as UIMessage,
+    ]);
+  };
+
+  // Surface backend quota errors and put Glitch to sleep for today as a chat reply.
   useEffect(() => {
     if (!error) return;
 
     const message = error.message || "";
-    if (
+    const isQuotaError =
       message.includes("You exceeded your current quota") ||
       message.includes("RESOURCE_EXHAUSTED") ||
-      message.includes("maxRetriesExceeded")
-    ) {
+      message.includes("maxRetriesExceeded");
+
+    if (isQuotaError && sleepingToday) {
+      return;
+    }
+
+    if (isQuotaError) {
       putGlitchToSleepForToday();
-      setLimitReachedMessage(
+      appendGlitchMessage(
         "Glitch has been answering way too many questions today and needs a power nap. I’m done for today, but I’ll be back tomorrow."
       );
-    } else if (!limitReachedMessage) {
-      setLimitReachedMessage("Glitch ran into an unexpected error. Please try again in a bit.");
+    } else {
+      appendGlitchMessage("Glitch ran into an unexpected error. Please try again in a bit.");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [error]);
+  }, [error, sleepingToday]);
 
+  // Always keep the latest message in view when chat is open.
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages.length, isLoading]);
+    if (!open || !bottomRef.current) return;
+    bottomRef.current.scrollIntoView({ behavior: "auto", block: "end" });
+  }, [open, messages.length]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setLimitReachedMessage(null);
-    if (!input.trim() || isLoading) return;
+    const text = input.trim();
+    if (!text || isLoading) return;
+    setInput("");
+
     if (sleepingToday) {
-      setLimitReachedMessage(
+      appendLocalExchange(
+        text,
         "Glitch is out of tokens for today and is fast asleep. I’ll be back tomorrow with fresh energy."
       );
       return;
     }
     if (atDayLimit) {
-      setLimitReachedMessage(
+      appendLocalExchange(
+        text,
         `Glitch has hit its daily limit of ${MAX_REQUESTS_PER_DAY} questions. Even AI needs a reset — try again tomorrow.`
       );
       return;
     }
     if (atMinuteLimit) {
-      setLimitReachedMessage(
+      appendLocalExchange(
+        text,
         `Whoa, speedrunner. I can only handle ${MAX_REQUESTS_PER_MINUTE} questions per minute — give me a couple of seconds to cool down.`
       );
       return;
     }
-    sendMessage({ text: input.trim() });
-    setInput("");
+    // Normal path: let useChat manage user + assistant messages.
+    sendMessage({ text });
   };
 
   return (
@@ -208,10 +247,7 @@ function ChatWidgetContent({
             </p>
           </SheetHeader>
 
-          <div
-            ref={scrollRef}
-            className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0"
-          >
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
             {messages.length === 0 && (
               <div className="space-y-4">
                 <div className="rounded-lg border border-border bg-muted/40 p-3">
@@ -231,7 +267,7 @@ function ChatWidgetContent({
                         key={q}
                         type="button"
                         onClick={() => setInput(q)}
-                        disabled={atLimit}
+                        disabled={atHardLimit}
                         className="px-3 py-2 text-left text-sm rounded-lg bg-muted hover:bg-muted/80 text-foreground border border-border transition-colors disabled:opacity-50 disabled:pointer-events-none"
                       >
                         {q}
@@ -269,9 +305,7 @@ function ChatWidgetContent({
                 Thinking...
               </div>
             )}
-            {limitReachedMessage && (
-              <p className="text-sm text-amber-600 dark:text-amber-400">{limitReachedMessage}</p>
-            )}
+            <div ref={bottomRef} />
           </div>
 
           <form onSubmit={handleSubmit} className="p-4 border-t border-border flex gap-2">
@@ -280,12 +314,12 @@ function ChatWidgetContent({
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about experience or skills..."
               className="flex-1 rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-              disabled={isLoading || atLimit}
+              disabled={isLoading || atHardLimit}
             />
             <Button
               type="submit"
               size="icon"
-              disabled={isLoading || !input.trim() || atLimit}
+              disabled={isLoading || !input.trim() || atHardLimit}
               className="shrink-0"
             >
               {isLoading ? (
