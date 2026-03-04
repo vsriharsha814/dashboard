@@ -41,7 +41,7 @@ export default function AllProjectsPage() {
               href={`/projects/${project.slug}`}
               className="block h-full"
             >
-              <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-all duration-300 group flex flex-col">
+              <Card className="h-full overflow-hidden border-border bg-card hover:border-primary/50 transition-all duration-300 group flex flex-col p-0 gap-0">
                 <div className="relative h-40 w-full overflow-hidden bg-muted shrink-0">
                   <Image
                     src={project.image ?? PLACEHOLDER_IMAGE}
