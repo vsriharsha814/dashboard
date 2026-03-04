@@ -130,16 +130,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             )}
 
             {project.slug === "operation-classified" && demoUrl && (
-              <div className="mb-8">
+              <div className="mb-8 hidden lg:block">
                 <h2 className="text-2xl font-bold text-foreground mb-4">
                   Live Agent Roster Screen
                 </h2>
-                <div className="aspect-video w-full rounded-lg border border-border overflow-hidden bg-black">
+                <div className="aspect-video w-full max-w-sm md:max-w-3xl mx-auto rounded-lg border border-border overflow-hidden bg-black">
                   <iframe
                     src={demoUrl}
                     className="w-full h-full"
                     loading="lazy"
-                    allow="fullscreen"
+                    allowFullScreen
                   />
                 </div>
                 <p className="text-xs text-muted-foreground mt-2">
