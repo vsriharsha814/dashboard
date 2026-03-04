@@ -9,6 +9,7 @@ const CHAT_ID_KEY = "portfolio-chat-id";
 const CHAT_MESSAGES_KEY = "portfolio-chat-messages";
 const CHAT_USAGE_KEY = "portfolio-chat-usage";
 const CHAT_MINUTE_USAGE_KEY = "portfolio-chat-usage-minute";
+const CHAT_SLEEP_KEY = "portfolio-chat-sleep";
 
 export const MAX_REQUESTS_PER_DAY = 20;
 export const MAX_REQUESTS_PER_MINUTE = 5;
@@ -200,6 +201,33 @@ export function incrementUsageThisMinute(): void {
       : { bucket, count: 0 };
     const count = prev.bucket === bucket ? prev.count + 1 : 1;
     localStorage.setItem(CHAT_MINUTE_USAGE_KEY, JSON.stringify({ bucket, count }));
+  } catch {
+    // ignore
+  }
+}
+
+interface SleepState {
+  date: string;
+  asleep: boolean;
+}
+
+export function isGlitchSleepingToday(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const raw = localStorage.getItem(CHAT_SLEEP_KEY);
+    if (!raw) return false;
+    const { date, asleep } = JSON.parse(raw) as SleepState;
+    return asleep && date === getToday();
+  } catch {
+    return false;
+  }
+}
+
+export function putGlitchToSleepForToday(): void {
+  if (typeof window === "undefined") return;
+  try {
+    const state: SleepState = { date: getToday(), asleep: true };
+    localStorage.setItem(CHAT_SLEEP_KEY, JSON.stringify(state));
   } catch {
     // ignore
   }

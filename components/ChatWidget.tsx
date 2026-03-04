@@ -18,6 +18,8 @@ import {
   incrementUsageThisMinute,
   MAX_REQUESTS_PER_DAY,
   MAX_REQUESTS_PER_MINUTE,
+  isGlitchSleepingToday,
+  putGlitchToSleepForToday,
 } from "@/lib/chat-storage";
 
 const STARTER_QUESTIONS = [
@@ -101,7 +103,7 @@ function ChatWidgetContent({
   const [limitReachedMessage, setLimitReachedMessage] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
-  const { messages, sendMessage, status } = useChat({
+  const { messages, sendMessage, status, error } = useChat({
     id: chatId,
     messages: initialMessages,
     onFinish: ({ messages: nextMessages }) => {
@@ -125,9 +127,30 @@ function ChatWidgetContent({
   const isLoading = status === "streaming" || status === "submitted";
   const usageToday = getUsageToday();
   const usageThisMinute = getUsageThisMinute();
+  const sleepingToday = isGlitchSleepingToday();
   const atDayLimit = usageToday >= MAX_REQUESTS_PER_DAY;
   const atMinuteLimit = usageThisMinute >= MAX_REQUESTS_PER_MINUTE;
-  const atLimit = atDayLimit || atMinuteLimit;
+  const atLimit = atDayLimit || atMinuteLimit || sleepingToday;
+
+  // Surface backend quota errors and put Glitch to sleep for today.
+  useEffect(() => {
+    if (!error) return;
+
+    const message = error.message || "";
+    if (
+      message.includes("You exceeded your current quota") ||
+      message.includes("RESOURCE_EXHAUSTED") ||
+      message.includes("maxRetriesExceeded")
+    ) {
+      putGlitchToSleepForToday();
+      setLimitReachedMessage(
+        "Glitch has been answering way too many questions today and needs a power nap. I’m done for today, but I’ll be back tomorrow."
+      );
+    } else if (!limitReachedMessage) {
+      setLimitReachedMessage("Glitch ran into an unexpected error. Please try again in a bit.");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -139,6 +162,12 @@ function ChatWidgetContent({
     e.preventDefault();
     setLimitReachedMessage(null);
     if (!input.trim() || isLoading) return;
+    if (sleepingToday) {
+      setLimitReachedMessage(
+        "Glitch is out of tokens for today and is fast asleep. I’ll be back tomorrow with fresh energy."
+      );
+      return;
+    }
     if (atDayLimit) {
       setLimitReachedMessage(
         `Glitch has hit its daily limit of ${MAX_REQUESTS_PER_DAY} questions. Even AI needs a reset — try again tomorrow.`
