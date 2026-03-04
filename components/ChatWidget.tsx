@@ -18,9 +18,10 @@ import {
 } from "@/lib/chat-storage";
 
 const STARTER_QUESTIONS = [
-  "Tell me about the Cisco project",
-  "What is your tech stack?",
-  "How did you reduce hallucinations?",
+  "Give me a quick overview of Harsha as an engineer.",
+  "What is Harsha's tech stack and what is he strongest at?",
+  "Why should I hire Harsha for an AI / ML engineer role?",
+  "Walk me through Harsha's most impactful project.",
 ];
 
 function renderWithBold(text: string) {
