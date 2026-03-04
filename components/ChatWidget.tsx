@@ -23,6 +23,27 @@ const STARTER_QUESTIONS = [
   "How did you reduce hallucinations?",
 ];
 
+function renderWithBold(text: string) {
+  const segments = text.split(/(\*\*[^*]+\*\*)/g);
+
+  return segments.map((segment, index) => {
+    if (segment.startsWith("**") && segment.endsWith("**") && segment.length > 4) {
+      const content = segment.slice(2, -2);
+      return (
+        <strong key={index}>
+          {content}
+        </strong>
+      );
+    }
+
+    return (
+      <span key={index}>
+        {segment}
+      </span>
+    );
+  });
+}
+
 function ChatWidgetContent({
   chatId,
   initialMessages,
@@ -89,28 +110,39 @@ function ChatWidgetContent({
           className="w-full sm:max-w-md flex flex-col p-0 bg-background border-border"
         >
           <SheetHeader className="p-4 border-b border-border">
-            <SheetTitle className="text-foreground">Ask about Harsha</SheetTitle>
+            <SheetTitle className="text-foreground">Hire Harsha AI</SheetTitle>
             <p className="text-sm text-muted-foreground font-normal">
-              Skills, experience & projects · {usageToday}/{MAX_MESSAGES_PER_DAY} today
+              Your recruiter-style copilot. {usageToday}/{MAX_MESSAGES_PER_DAY} questions used today.
             </p>
           </SheetHeader>
 
           <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
             {messages.length === 0 && (
-              <div className="space-y-3">
-                <p className="text-sm text-muted-foreground">Try a question:</p>
-                <div className="flex flex-wrap gap-2">
-                  {STARTER_QUESTIONS.map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => setInput(q)}
-                      disabled={atLimit}
-                      className="px-3 py-2 text-left text-sm rounded-lg bg-muted hover:bg-muted/80 text-foreground border border-border transition-colors disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                      {q}
-                    </button>
-                  ))}
+              <div className="space-y-4">
+                <div className="rounded-lg border border-border bg-muted/40 p-3">
+                  <p className="text-sm font-medium text-foreground">
+                    👋 Meet <span className="font-semibold">Hire Harsha AI</span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Ask like a hiring manager and it will pitch Harsha based on real projects, impact,
+                    and systems work &mdash; tuned to make your decision easy.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">Try a question:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {STARTER_QUESTIONS.map((q) => (
+                      <button
+                        key={q}
+                        type="button"
+                        onClick={() => setInput(q)}
+                        disabled={atLimit}
+                        className="px-3 py-2 text-left text-sm rounded-lg bg-muted hover:bg-muted/80 text-foreground border border-border transition-colors disabled:opacity-50 disabled:pointer-events-none"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -125,13 +157,13 @@ function ChatWidgetContent({
                 )}
               >
                 <span className="font-medium text-muted-foreground text-xs block mb-1">
-                  {m.role === "user" ? "You" : "Harsha's AI"}
+                  {m.role === "user" ? "You" : "Hire Harsha AI"}
                 </span>
                 <div className="whitespace-pre-wrap">
                   {m.parts
                     ?.filter((p): p is { type: "text"; text: string } => p.type === "text")
                     .map((p, i) => (
-                      <span key={i}>{p.text}</span>
+                      <span key={i}>{renderWithBold(p.text)}</span>
                     )) ?? null}
                 </div>
               </div>

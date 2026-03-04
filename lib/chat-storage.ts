@@ -11,6 +11,9 @@ const CHAT_USAGE_KEY = "portfolio-chat-usage";
 
 export const MAX_MESSAGES_PER_DAY = 30;
 
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const FOUR_HOURS_MS = 4 * 60 * 60 * 1000;
+
 function getToday(): string {
   return new Date().toISOString().slice(0, 10);
 }
@@ -25,13 +28,96 @@ export function getOrCreateChatId(): string {
   return id;
 }
 
+interface StoredChatData {
+  messages: UIMessage[];
+  savedAt: string; // ISO timestamp of last save
+}
+
 export function loadStoredMessages(): UIMessage[] {
   if (typeof window === "undefined") return [];
+
   try {
     const raw = localStorage.getItem(CHAT_MESSAGES_KEY);
     if (!raw) return [];
+
     const parsed = JSON.parse(raw) as unknown;
-    return Array.isArray(parsed) ? (parsed as UIMessage[]) : [];
+
+    let data: StoredChatData;
+
+    // Backwards compatibility: old format was a plain array of UIMessage.
+    if (Array.isArray(parsed)) {
+      data = {
+        messages: parsed as UIMessage[],
+        savedAt: new Date().toISOString(),
+      };
+    } else if (
+      parsed &&
+      typeof parsed === "object" &&
+      Array.isArray((parsed as { messages?: unknown }).messages)
+    ) {
+      const obj = parsed as { messages: unknown; savedAt?: string };
+      data = {
+        messages: obj.messages as UIMessage[],
+        savedAt: typeof obj.savedAt === "string" ? obj.savedAt : new Date().toISOString(),
+      };
+    } else {
+      return [];
+    }
+
+    const now = Date.now();
+    const savedAtTime = Date.parse(data.savedAt);
+
+    // Drop everything if last save is older than 24 hours.
+    if (!Number.isNaN(savedAtTime) && now - savedAtTime > ONE_DAY_MS) {
+      localStorage.removeItem(CHAT_MESSAGES_KEY);
+      return [];
+    }
+
+    // Clear visible chat if the last activity was more than 4 hours ago,
+    // but keep the data in storage to maintain a 24h backlog.
+    const lastMessage = data.messages[data.messages.length - 1];
+    let lastTimestamp = savedAtTime;
+    if (
+      lastMessage &&
+      typeof lastMessage === "object" &&
+      "createdAt" in lastMessage &&
+      typeof (lastMessage as { createdAt?: unknown }).createdAt === "string"
+    ) {
+      const createdAt = Date.parse(
+        (lastMessage as { createdAt?: string }).createdAt as string
+      );
+      if (!Number.isNaN(createdAt)) {
+        lastTimestamp = createdAt;
+      }
+    }
+
+    if (!Number.isNaN(lastTimestamp) && now - lastTimestamp > FOUR_HOURS_MS) {
+      // Start the UI fresh after 4 hours of inactivity.
+      return [];
+    }
+
+    // Prune individual messages older than 24 hours from now to keep backlog bounded.
+    const cutoff = now - ONE_DAY_MS;
+    const filtered = data.messages.filter((m) => {
+      if (
+        m &&
+        typeof m === "object" &&
+        "createdAt" in m &&
+        typeof (m as { createdAt?: unknown }).createdAt === "string"
+      ) {
+        const t = Date.parse((m as { createdAt?: string }).createdAt as string);
+        if (!Number.isNaN(t)) {
+          return t >= cutoff;
+        }
+      }
+      return true;
+    });
+
+    if (filtered.length !== data.messages.length) {
+      saveStoredMessages(filtered);
+    }
+
+    return filtered;
   } catch {
     return [];
   }
@@ -40,7 +126,11 @@ export function loadStoredMessages(): UIMessage[] {
 export function saveStoredMessages(messages: UIMessage[]): void {
   if (typeof window === "undefined") return;
   try {
-    localStorage.setItem(CHAT_MESSAGES_KEY, JSON.stringify(messages));
+    const payload: StoredChatData = {
+      messages,
+      savedAt: new Date().toISOString(),
+    };
+    localStorage.setItem(CHAT_MESSAGES_KEY, JSON.stringify(payload));
   } catch {
     // ignore quota or parse errors
   }
