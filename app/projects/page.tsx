@@ -57,10 +57,15 @@ export default function AllProjectsPage() {
                   </div>
                 </div>
                 <CardContent className="p-4 md:p-5 flex flex-col flex-1">
-                  <span className="text-xs text-muted-foreground">
-                    {project.year}
-                  </span>
-                  <h2 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors mt-0.5 mb-1.5">
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>{project.year}</span>
+                    {project.kind === "experience" && (
+                      <span className="inline-flex items-center rounded-full border border-emerald-500/40 bg-emerald-500/5 px-2 py-0.5 text-[0.65rem] font-semibold text-emerald-300 uppercase tracking-wide">
+                        Work Experience
+                      </span>
+                    )}
+                  </div>
+                  <h2 className="text-lg font-bold text-foreground group-hover:text-primary transition-colors mt-1 mb-1.5">
                     {project.title}
                   </h2>
                   <p className="text-sm text-muted-foreground leading-relaxed flex-1 line-clamp-2">
