@@ -200,7 +200,7 @@ export const projects: ProjectItem[] = [
     category: "Data / ML",
     year: 2025,
     technologies: ["Python", "XGBoost", "Pandas", "Geospatial Analysis"],
-    image: "https://images.unsplash.com/photo-1506377295352-e3154d43ea9e?w=800&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1453873531674-2151bcd01707?w=800&h=600&fit=crop",
     featured: false,
   },
   {
