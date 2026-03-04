@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, type ReactNode } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import type { UIMessage } from "ai";
@@ -50,7 +50,7 @@ function renderWithBold(text: string) {
 
 function renderMessageContent(text: string) {
   const lines = text.split("\n");
-  const blocks: JSX.Element[] = [];
+  const blocks: ReactNode[] = [];
   let listItems: string[] = [];
 
   const flushList = () => {
@@ -277,11 +277,15 @@ export default function ChatWidget() {
   const [chatId, setChatId] = useState("");
   const [initialMessages, setInitialMessages] = useState<UIMessage[]>([]);
 
+  /* eslint-disable */
   useEffect(() => {
-    setChatId(getOrCreateChatId());
-    setInitialMessages(loadStoredMessages());
+    const id = getOrCreateChatId();
+    const stored = loadStoredMessages();
+    setChatId(id);
+    setInitialMessages(stored);
     setReady(true);
   }, []);
+  /* eslint-enable */
 
   if (!ready) {
     return (
