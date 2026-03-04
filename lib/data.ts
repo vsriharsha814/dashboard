@@ -219,7 +219,7 @@ export const projects: ProjectItem[] = [
       "Realtime UI",
     ],
     image:
-      "https://images.unsplash.com/photo-1542362567-b07e54358753?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&h=600&fit=crop",
     liveUrl: "https://itbheist.vercel.app",
     demoUrl: "https://itbheist.vercel.app/screen",
     featured: true,
