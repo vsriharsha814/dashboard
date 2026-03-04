@@ -56,6 +56,7 @@ export interface ProjectItem {
   repoUrl?: string;
   featured: boolean;
   metric?: string; // e.g. "95% Hallucination Reduction"
+  kind?: "experience" | "project";
 }
 
 export const education: Education[] = [
@@ -138,6 +139,7 @@ export const projects: ProjectItem[] = [
     technologies: ["Python", "FastAPI", "MongoDB", "Docker", "LLMs"],
     image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&h=600&fit=crop",
     featured: true,
+    kind: "experience",
   },
   {
     id: "faithcircle",
@@ -173,6 +175,7 @@ export const projects: ProjectItem[] = [
     image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop",
     featured: true,
     metric: "85% Reduction in Manual Processing",
+    kind: "experience",
   },
   {
     id: "exactly-once",
@@ -237,6 +240,7 @@ export const projects: ProjectItem[] = [
     image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=600&fit=crop",
     featured: true,
     metric: "95% Hallucination Reduction",
+    kind: "experience",
   },
 ];
 

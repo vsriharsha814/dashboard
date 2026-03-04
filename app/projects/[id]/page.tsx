@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { getProjectBySlug } from "@/lib/data";
+import { getProjectBySlug, experiences } from "@/lib/data";
 import { getProjectById } from "@/data/projects";
 import { getProjectScreenshots } from "@/lib/screenshots";
 import { ChevronLeft, ExternalLink, Github } from "lucide-react";
@@ -51,6 +51,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
+  const experienceMeta = experiences.find(
+    (exp) => exp.slug === project.slug || exp.id === project.slug
+  );
+
   const screenshots = await getProjectScreenshots(project.slug);
   const hasDemoUrl = project.demoUrl || project.liveUrl;
   const demoUrl = project.demoUrl || project.liveUrl;
@@ -88,6 +92,11 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               {project.metric && (
                 <span className="px-3 py-1 bg-primary/10 text-primary rounded-md text-sm font-semibold border border-primary/20">
                   {project.metric}
+                </span>
+              )}
+              {experienceMeta && (
+                <span className="px-3 py-1 bg-emerald-500/10 text-emerald-400 rounded-md text-xs font-semibold border border-emerald-500/30">
+                  Work Experience · {experienceMeta.company}
                 </span>
               )}
             </div>
