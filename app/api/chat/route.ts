@@ -66,6 +66,22 @@ export async function POST(req: Request) {
       }
     }
 
+    // Handle upstream Gemini rate limiting with a friendly message
+    if (statusCode === 429) {
+      return new Response(
+        JSON.stringify({
+          error:
+            "Glitch has been answering way too many questions today and needs a power nap. Slow down a bit and try again later.",
+        }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
     return new Response(
       JSON.stringify({
         error: "Chat service is temporarily unavailable. Please try again later.",
