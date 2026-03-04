@@ -1,12 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
+import type { UIMessage } from "ai";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Send, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import {
+  getOrCreateChatId,
+  loadStoredMessages,
+  saveStoredMessages,
+  getUsageToday,
+  incrementUsageToday,
+  MAX_MESSAGES_PER_DAY,
+} from "@/lib/chat-storage";
 
 const STARTER_QUESTIONS = [
   "Tell me about the Cisco project",
@@ -14,13 +23,54 @@ const STARTER_QUESTIONS = [
   "How did you reduce hallucinations?",
 ];
 
-export default function ChatWidget() {
+function ChatWidgetContent({
+  chatId,
+  initialMessages,
+}: {
+  chatId: string;
+  initialMessages: UIMessage[];
+}) {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [limitReachedMessage, setLimitReachedMessage] = useState<string | null>(null);
+
   const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    id: chatId,
+    messages: initialMessages,
+    onFinish: ({ messages: nextMessages }) => {
+      saveStoredMessages(nextMessages);
+      incrementUsageToday();
+    },
+    transport: new DefaultChatTransport({
+      api: "/api/chat",
+      prepareSendMessagesRequest: ({ messages: msgs }) => {
+        const recentMessages = msgs.slice(-6);
+        return {
+          body: {
+            messages: recentMessages,
+          },
+        };
+      },
+    }),
   });
+
   const isLoading = status === "streaming" || status === "submitted";
+  const usageToday = getUsageToday();
+  const atLimit = usageToday >= MAX_MESSAGES_PER_DAY;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLimitReachedMessage(null);
+    if (!input.trim() || isLoading) return;
+    if (atLimit) {
+      setLimitReachedMessage(
+        `Daily limit reached (${MAX_MESSAGES_PER_DAY} messages). Resets at midnight.`
+      );
+      return;
+    }
+    sendMessage({ text: input.trim() });
+    setInput("");
+  };
 
   return (
     <>
@@ -28,7 +78,7 @@ export default function ChatWidget() {
         <SheetTrigger asChild>
           <Button
             size="icon"
-            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg border border-border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary z-50"
+            className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg border border-border bg-primary text-primary-foreground hover:bg-primary/90 hover:border-primary z-50"
             aria-label="Open chat"
           >
             <MessageCircle className="h-6 w-6" />
@@ -41,7 +91,7 @@ export default function ChatWidget() {
           <SheetHeader className="p-4 border-b border-border">
             <SheetTitle className="text-foreground">Ask about Harsha</SheetTitle>
             <p className="text-sm text-muted-foreground font-normal">
-              Skills, experience & projects
+              Skills, experience & projects · {usageToday}/{MAX_MESSAGES_PER_DAY} today
             </p>
           </SheetHeader>
 
@@ -54,10 +104,9 @@ export default function ChatWidget() {
                     <button
                       key={q}
                       type="button"
-                      onClick={() => {
-                        setInput(q);
-                      }}
-                      className="px-3 py-2 text-left text-sm rounded-lg bg-muted hover:bg-muted/80 text-foreground border border-border transition-colors"
+                      onClick={() => setInput(q)}
+                      disabled={atLimit}
+                      className="px-3 py-2 text-left text-sm rounded-lg bg-muted hover:bg-muted/80 text-foreground border border-border transition-colors disabled:opacity-50 disabled:pointer-events-none"
                     >
                       {q}
                     </button>
@@ -93,34 +142,60 @@ export default function ChatWidget() {
                 Thinking...
               </div>
             )}
+            {limitReachedMessage && (
+              <p className="text-sm text-amber-600 dark:text-amber-400">{limitReachedMessage}</p>
+            )}
           </div>
 
-          <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (!input.trim() || isLoading) return;
-            sendMessage({ text: input.trim() });
-            setInput("");
-          }}
-          className="p-4 border-t border-border flex gap-2"
-        >
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Ask about experience or skills..."
-            className="flex-1 rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-            disabled={isLoading}
-          />
-          <Button type="submit" size="icon" disabled={isLoading || !input.trim()} className="shrink-0">
-            {isLoading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Send className="h-4 w-4" />
-            )}
-          </Button>
-        </form>
+          <form onSubmit={handleSubmit} className="p-4 border-t border-border flex gap-2">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask about experience or skills..."
+              className="flex-1 rounded-lg border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+              disabled={isLoading || atLimit}
+            />
+            <Button
+              type="submit"
+              size="icon"
+              disabled={isLoading || !input.trim() || atLimit}
+              className="shrink-0"
+            >
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+            </Button>
+          </form>
         </SheetContent>
       </Sheet>
     </>
   );
+}
+
+export default function ChatWidget() {
+  const [ready, setReady] = useState(false);
+  const [chatId, setChatId] = useState("");
+  const [initialMessages, setInitialMessages] = useState<UIMessage[]>([]);
+
+  useEffect(() => {
+    setChatId(getOrCreateChatId());
+    setInitialMessages(loadStoredMessages());
+    setReady(true);
+  }, []);
+
+  if (!ready) {
+    return (
+      <Button
+        size="icon"
+        className="fixed bottom-6 right-6 h-14 w-14 rounded-full shadow-lg border border-border bg-primary text-primary-foreground hover:bg-primary/90 hover:border-primary z-50"
+        aria-label="Open chat"
+      >
+        <MessageCircle className="h-6 w-6" />
+      </Button>
+    );
+  }
+
+  return <ChatWidgetContent chatId={chatId} initialMessages={initialMessages} />;
 }
