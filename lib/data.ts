@@ -228,6 +228,23 @@ export const projects: ProjectItem[] = [
     featured: true,
   },
   {
+    id: "adamara",
+    slug: "adamara",
+    title: "AdAmara – Ad Request Portal",
+    description:
+      "Production ad-request portal for Amaravati Communications with structured briefs, timelines, and admin review.",
+    longDescription:
+      "AdAmara is a full-stack ad-request portal built for Amaravati Communications Pvt. Ltd. It replaces ad-hoc emails and chats with a single, structured workflow where individuals and teams can submit ad requests with audiences, budgets, timelines, and reference files. Approved admins log into a simple dashboard to review, track, and export requests so campaigns actually ship on time. The product is live in production at Amaravati Communications and is actively used by the team to run their advertising workflow end to end.",
+    category: "Full Stack / Tools",
+    year: 2022,
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Form Handling", "Vercel"],
+    image:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop",
+    liveUrl: "https://adamara.vercel.app",
+    demoUrl: "https://adamara.vercel.app",
+    featured: false,
+  },
+  {
     id: "darwinbox",
     slug: "darwinbox",
     title: "RAG-based GenAI Systems",
