@@ -239,7 +239,7 @@ export const projects: ProjectItem[] = [
     year: 2022,
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Form Handling", "Vercel"],
     image:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=800&h=600&fit=crop",
     liveUrl: "https://adamara.vercel.app",
     demoUrl: "https://adamara.vercel.app",
     featured: false,
